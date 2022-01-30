@@ -1,16 +1,17 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React, { useEffect, useRef } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import Icon, { Icons } from 'react-native-vector-icons/AntDesign';
-import { Icons1 } from 'react-native-vector-icons/Entypo';
-import { Icons2 } from 'react-native-vector-icons/Ionicons';
+import Icon, { Icons } from 'react-native-vector-icons/Ionicons';
 import * as Animatable from 'react-native-animatable';
+import {primaryColor} from '../assets/styles'
 import Home from '../screens/home';
+import Settings from '../screens/Settings';
+import Notifications from '../screens/Notifications';
 
 const TabArr = [
-    { route: 'Notification', label: 'Notification', type: Icons2, icon: 'ios-notifications-outline', component: Home },
-    { route: 'Home', label: 'Home', type: Icons, icon: 'home', component: Home },
-    { route: 'Settings', label: 'Settings', type: Icons1, icon: 'home', component: Home },
+    { route: 'Notification', label: 'Notification', type: Icons, icon: 'notifications-outline', component: Notifications },
+    { route: 'Home', label: 'Home', type: Icons, icon: 'home-outline', component: Home },
+    { route: 'Settings', label: 'Settings', type: Icons, icon: 'cog-outline', component: Settings },
 ];
 
 const Tab = createBottomTabNavigator();
@@ -53,7 +54,7 @@ const TabButton = (props) => {
                     <Animatable.View
                         ref={circleRef}
                         style={styles.circle} />
-                    <Icon size={20} type={item.type} name={item.icon} color={focused ? '#fff' : 'green'} />
+                    <Icon size={20} type={item.type} name={item.icon} color={focused ? '#fff' : '#000'} />
                 </View>
                 <Animatable.Text
                     ref={textRef}
@@ -72,7 +73,7 @@ export default function AnimTab1() {
                 headerShown: false,
                 tabBarStyle: styles.tabBar,
             }}
-            defaultScreenOptions={'home'}
+            defaultScreenOptions={'Home'}
         >
             {TabArr.map((item, index) => {
                 return (
@@ -116,12 +117,12 @@ const styles = StyleSheet.create({
         ...StyleSheet.absoluteFillObject,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'green',
+        backgroundColor: primaryColor,
         borderRadius: 25,
     },
     text: {
         fontSize: 10,
         textAlign: 'center',
-        color: 'green',
+        color: '#000',
     }
 })
