@@ -7,40 +7,35 @@ import { FlatGrid } from 'react-native-super-grid';
 const DATA = [
     {
         id: 1,
-        name: 'Email & Social Tickiting',
+        name: 'Complaints',
         code: '#E4FFFF',
-        image: require('../assets/images/email.png')
+        image: require('../assets/images/clipboard.png')
     },
     {
         id: 2,
-        name: 'Push Notification',
-        code: '#EBF7CC',
-        image: require('../assets/images/notification.png')
-    },
-    {
-        id: 3,
         name: 'Track Complaint Status',
         code: '#D6ADEB',
         image: require('../assets/images/notepad-pen.png')
     },
     {
+        id: 3,
+        name: 'Save Food',
+        code: '#EBF7CC',
+        image: require('../assets/images/fast-food.png')
+    },
+    {
         id: 4,
+        name: 'Donations',
+        code: '#C9C0BB',
+        image: require('../assets/images/solidarity.png')
+    },
+    {
+        id: 5,
         name: 'Live Chat',
         code: '#E9D7D8',
         image: require('../assets/images/live-chat.png')
     },
-    {
-        id: 5,
-        name: 'Dynamic Ticket Form',
-        code: '#C9C0BB',
-        image: require('../assets/images/clipboard.png')
-    },
-    {
-        id: 6,
-        name: 'Self Service Portal',
-        code: '#EBF4FA',
-        image: require('../assets/images/self-service.png')
-    },
+   
 ]
 
 const renderItem = (item) => {
@@ -53,7 +48,7 @@ const renderItem = (item) => {
                     </View>
 
                     <View>
-                        <Text style={{textAlign:'center',marginTop:10,color:'#fff',fontSize:14,fontFamily:'Ubuntu-Regular'}}>
+                        <Text style={{textAlign:'center',marginTop:10,color:'#000',fontSize:14,fontFamily:'Ubuntu-Regular'}}>
                             {item.name}
                         </Text>
                     </View>

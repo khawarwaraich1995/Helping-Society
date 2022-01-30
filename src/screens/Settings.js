@@ -36,25 +36,13 @@ export default class Settings extends Component {
                     </TouchableOpacity>
 
                     <TouchableOpacity activeOpacity={.7}>
+                        {tabsView({ title: 'About Us' })}
+                        <View style={{ borderBottomWidth: 1, borderColor: 'grey', marginTop: 10 }}>
+                        </View>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity activeOpacity={.7}>
                         {tabsView({ title: 'Privacy & Security' })}
-                        <View style={{ borderBottomWidth: 1, borderColor: 'grey', marginTop: 10 }}>
-                        </View>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity activeOpacity={.7}>
-                        {tabsView({ title: 'Help & Center' })}
-                        <View style={{ borderBottomWidth: 1, borderColor: 'grey', marginTop:10 }}>
-                        </View>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity activeOpacity={.7}>
-                        {tabsView({ title: 'About' })}
-                        <View style={{ borderBottomWidth: 1, borderColor: 'grey', marginTop: 10 }}>
-                        </View>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity activeOpacity={.7}>
-                        {tabsView({ title: 'Privacy Polices' })}
                         <View style={{ borderBottomWidth: 1, borderColor: 'grey', marginTop: 10 }}>
                         </View>
                     </TouchableOpacity>
