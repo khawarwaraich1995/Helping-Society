@@ -25,7 +25,7 @@ export default class SaveFood extends Component {
                     </View>
                 </View>
 
-                <View>
+                {/* <View>
                     <SelectDropdown
                         data={countries}
                         defaultButtonText={"Food Type"}
@@ -54,27 +54,11 @@ export default class SaveFood extends Component {
                         buttonStyle={{ width: '90%', borderRadius: 10, marginTop: 30, height: 55, elevation: 3, alignSelf: 'center', backgroundColor: '#DCDCDC' }}
                         buttonTextStyle={{ textAlign: 'left', fontSize: 14 }}
                     />
-                </View>
+                </View> */}
 
                 <View style={{ marginTop: 10, marginHorizontal: 18 }}>
                     <Input
-                        title={'Location'}
-                        placeholderTextColor='#000'
-                        inpStyle={{ backgroundColor: '#DCDCDC' }}
-                    />
-                </View>
-
-                <View style={{ marginTop: 10, marginHorizontal: 18 }}>
-                    <Input
-                        title={'Latitude'}
-                        placeholderTextColor='#000'
-                        inpStyle={{ backgroundColor: '#DCDCDC' }}
-                    />
-                </View>
-
-                <View style={{ marginTop: 10, marginHorizontal: 18 }}>
-                    <Input
-                        title={'Longitude'}
+                        title={'Number of peoples'}
                         placeholderTextColor='#000'
                         inpStyle={{ backgroundColor: '#DCDCDC' }}
                     />
@@ -83,10 +67,10 @@ export default class SaveFood extends Component {
                 <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: 20 }}>
                     <TouchableOpacity>
                         <View style={{ backgroundColor: '#78F2C3', alignSelf: 'flex-start', padding: 15, borderRadius: 50, alignSelf: 'center' }}>
-                            <Image style={{ height: 30, width: 30 }} source={require('../../assets/images/map.png')} />
+                            <Image style={{ height: 30, width: 30 }} source={require('../../assets/images/placeholder.png')} />
                         </View>
                         <View>
-                            <Text style={{ textAlign: 'center', fontFamily: 'Ubuntu-Regular', color: '#000', marginTop: 5, fontSize: 12 }}>Pin{'\n'}Current{'\n'}Location</Text>
+                            <Text style={{ textAlign: 'center', fontFamily: 'Ubuntu-Regular', color: '#000', marginTop: 5, fontSize: 12 }}>Pin{'\n'}Other{'\n'}Location</Text>
                         </View>
                     </TouchableOpacity>
 
@@ -99,14 +83,7 @@ export default class SaveFood extends Component {
                         </View>
                     </TouchableOpacity>
 
-                    <TouchableOpacity>
-                        <View style={{ backgroundColor: '#78F2C3', alignSelf: 'flex-start', padding: 15, borderRadius: 50, alignSelf: 'center' }}>
-                            <Image style={{ height: 30, width: 30 }} source={require('../../assets/images/placeholder.png')} />
-                        </View>
-                        <View>
-                            <Text style={{ textAlign: 'center', fontFamily: 'Ubuntu-Regular', color: '#000', marginTop: 5, fontSize: 12 }}>Pin{'\n'}Other{'\n'}Location</Text>
-                        </View>
-                    </TouchableOpacity>
+
 
                     <TouchableOpacity>
                         <View style={{ backgroundColor: '#78F2C3', alignSelf: 'flex-start', padding: 15, borderRadius: 50, alignSelf: 'center' }}>
@@ -118,31 +95,48 @@ export default class SaveFood extends Component {
                     </TouchableOpacity>
                 </View>
 
+                <View style={{ marginTop: 10, marginHorizontal: 18 }}>
+                    <Input
+                        title={'Address'}
+                        placeholderTextColor='#000'
+                        inpStyle={{ backgroundColor: '#DCDCDC' }}
+                    />
+                </View>
+
+                <View style={{ marginTop: 10, marginHorizontal: 18 }}>
+                    <Input
+                        title={'City'}
+                        placeholderTextColor='#000'
+                        inpStyle={{ backgroundColor: '#DCDCDC' }}
+                    />
+                </View>
+
+                <View style={{ marginTop: 10, marginHorizontal: 18 }}>
+                    <Input
+                        title={'Postal Code'}
+                        placeholderTextColor='#000'
+                        inpStyle={{ backgroundColor: '#DCDCDC' }}
+                    />
+                </View>
+
+
+
 
                 <View style={{ marginTop: 10, marginHorizontal: 18 }}>
                     <Text style={{ marginBottom: 5, fontSize: 16, fontFamily: 'Ubuntu-Bold', color: '#000' }}>Additional Information</Text>
                     <Input
                         title={'Enter Message'}
                         placeholderTextColor='#000'
-                        inpStyle={{ backgroundColor: '#DCDCDC' }}
+                        inpStyle={{ backgroundColor: '#DCDCDC', height: 100 }}
                     />
                 </View>
 
-                <View style={{ marginTop: 10, marginHorizontal: 18 }}>
-                    <Text style={{ marginBottom: 5, fontSize: 16, fontFamily: 'Ubuntu-Bold', color: '#000' }}>Contact Info</Text>
-                    <Input
-                        title={'Name'}
-                        placeholderTextColor='#000'
-                        inpStyle={{ backgroundColor: '#DCDCDC' }}
-                    />
-                </View>
-
-                <View style={{flexDirection:'row',alignItems:'center',marginHorizontal:5,marginTop:20,marginBottom:10}}>
-                    <View style={{flex:1,marginHorizontal:10}}>
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginHorizontal: 5, marginTop: 20, marginBottom: 10 }}>
+                    <View style={{ flex: 1, marginHorizontal: 10 }}>
                         <Button title={'Clear'} />
                     </View>
 
-                    <View style={{flex:1,marginHorizontal:10}}>
+                    <View style={{ flex: 1, marginHorizontal: 10 }}>
                         <Button title={'Submit'} />
                     </View>
                 </View>

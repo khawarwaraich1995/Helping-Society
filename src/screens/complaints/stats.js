@@ -18,12 +18,12 @@ export default class Notifications extends Component {
         return (
             <View style={{ flex: 1, backgroundColor: '#fff' }}>
                 <View style={{ marginTop: 20, alignItems: 'center', flexDirection: 'row', justifyContent: 'center' }}>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('RegisterComplaint')} style={{ position: 'absolute', right: 20 }}>
+                    {/* <TouchableOpacity onPress={() => this.props.navigation.navigate('RegisterComplaint')} style={{ position: 'absolute', right: 20 }}>
                         <BackIcon name={'pluscircleo'} size={25} color='#000' />
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                     <View style={{ alignSelf: 'center' }}>
                         <Text style={{ fontFamily: 'Ubuntu-Bold', fontSize: 24, color: textColor }}>
-                            Complaints
+                            History
                         </Text>
                     </View>
                 </View>

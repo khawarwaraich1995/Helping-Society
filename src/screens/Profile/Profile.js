@@ -4,7 +4,8 @@ import ImagePicker from 'react-native-image-crop-picker';
 import Input from '../../components/Input';
 import BackIcon from 'react-native-vector-icons/AntDesign'
 import { primaryColor, textColor } from '../../assets/styles';
-
+import Button from '../../components/Button';
+import Feather from 'react-native-vector-icons/dist/Feather';
 export default class Profile extends Component {
   state = {
     image: ''
@@ -33,9 +34,23 @@ export default class Profile extends Component {
               Profile
             </Text>
           </View>
+          <TouchableOpacity onPress={() => this.props.navigation.goBack()} style={{ right: 20, position: 'absolute' }}>
+            <BackIcon name={'edit'} size={25} color='#000' />
+          </TouchableOpacity>
         </View>
 
-        <TouchableOpacity
+        <View style={{ justifyContent: "center", alignItems: "center", marginTop: 20, }}>
+          <View style={{ backgroundColor: "white", elevation: 5, borderRadius: 65, }}>
+            <Image source={{ uri: this.state.image }} style={{ height: 130, width: 130, borderRadius: 65, padding: 10, }} />
+            <View style={{ position: "absolute", right: -2, top: 80, height: 40, width: 40, backgroundColor: "red", justifyContent: "center", alignItems: "center", borderRadius: 20 }}>
+              <TouchableOpacity onPress={() => { this.imagePick() }}>
+                <Feather name="camera" size={20} color="white" />
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+
+        {/* <TouchableOpacity
           style={{
             height: 120,
             width: 120,
@@ -53,7 +68,7 @@ export default class Profile extends Component {
               borderRadius: 60,
               backgroundColor: 'green',
             }} />}
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         <View style={{ marginTop: 20 }}>
           <View style={{ marginTop: 10, marginHorizontal: 18 }}>
@@ -103,6 +118,9 @@ export default class Profile extends Component {
               inpStyle={{ backgroundColor: '#DCDCDC' }}
             />
           </View>
+        </View>
+        <View style={{ marginTop: 20, marginHorizontal: 18 }}>
+          <Button title='Update' />
         </View>
 
       </ScrollView>

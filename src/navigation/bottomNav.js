@@ -10,9 +10,9 @@ import Notifications from '../screens/Notifications';
 import Complaints from '../screens/complaints/stats';
 
 const TabArr = [
-    { route: 'Notification', label: 'Notification', type: Icons, icon: 'notifications-outline', component: Notifications },
     { route: 'Home', label: 'Home', type: Icons, icon: 'home-outline', component: Home },
-    { route: 'ComplaintHome', label: 'Complaints', type: Icons, icon: 'stats-chart-outline', component: Complaints },
+    { route: 'Notification', label: 'Notification', type: Icons, icon: 'notifications-outline', component: Notifications },
+    { route: 'ComplaintHome', label: 'History', type: Icons, icon: 'stats-chart-outline', component: Complaints },
     { route: 'Settings', label: 'Settings', type: Icons, icon: 'cog-outline', component: Settings },
 ];
 

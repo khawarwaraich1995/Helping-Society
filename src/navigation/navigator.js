@@ -8,6 +8,8 @@ import BottomNav from '../navigation/bottomNav'
 import RegisterComplaint from '../screens/complaints/registerComplaint'
 import Profile from '../screens/Profile/Profile'
 import SaveFood from '../screens/SaveFood/SaveFood';
+import Donations from '../screens/Donation/Donations';
+import ContactUs from '../screens/ContactUs/ContactUs';
 
 const Stack = createNativeStackNavigator();
 
@@ -23,6 +25,8 @@ class Navigator extends React.Component {
                     <Stack.Screen name="Home" component={BottomNav} />
                     <Stack.Screen name="Profile" component={Profile} />
                     <Stack.Screen name="SaveFood" component={SaveFood} />
+                    <Stack.Screen name="Donations" component={Donations} />
+                    <Stack.Screen name="ContactUs" component={ContactUs} />
                 </Stack.Navigator>
             </NavigationContainer>
         )

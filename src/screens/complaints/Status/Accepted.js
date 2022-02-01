@@ -4,15 +4,15 @@ import React, { Component } from 'react';
 const DATA = [
     {
         id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-        title: 'Accepted',
+        type: 'Complaint',
     },
     {
         id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-        title: 'Accepted',
+        type: 'Food',
     },
     {
         id: '58694a0f-3da1-471f-bd96-145571e29d72',
-        title: 'Accepted',
+        type: 'Donation',
     },
 ];
 
@@ -20,11 +20,11 @@ const renderItem = ({ item }) => {
     return (
         <View style={{ backgroundColor: '#fff', elevation: 5, marginHorizontal: 12, marginVertical: 10,  borderRadius: 8, flexDirection: 'row' }}>
             <View>
-                <View style={{ backgroundColor: 'green', width: 10, flex: 1 }}></View>
+                <View style={{ backgroundColor: 'green', width: 10, flex: 1,borderTopLeftRadius:8,borderBottomLeftRadius:8 }}></View>
             </View>
             <View style={{flex:1}}>
                 <View style={{alignSelf:'flex-end',marginRight:10}}>
-                    <Text style={{fontSize:16,fontFamily:'Ubuntu-Bold',color:'green'}}>{item.title}</Text>
+                    <Text style={{fontSize:16,fontFamily:'Ubuntu-Bold',color:'green'}}>Type: {item.type}</Text>
                 </View>
                 <View style={{marginLeft:10,marginBottom:10}}>
                     <Text style={{fontFamily:'Ubuntu-Regular',fontSize:15,color:'#000'}}>Name: Khawar Hussain</Text>

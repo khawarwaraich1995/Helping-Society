@@ -8,17 +8,10 @@ import BackIcon from 'react-native-vector-icons/AntDesign'
 const DATA = [
     {
         id: 1,
-        name: 'Complaints',
+        name: 'Complaint',
         code: '#E4FFFF',
         image: require('../assets/images/clipboard.png'),
-        path: 'SaveFood'
-    },
-    {
-        id: 2,
-        name: 'Track Complaint Status',
-        code: '#D6ADEB',
-        image: require('../assets/images/notepad-pen.png'),
-        path: 'SaveFood'
+        path: 'RegisterComplaint'
     },
     {
         id: 3,
@@ -32,14 +25,14 @@ const DATA = [
         name: 'Donations',
         code: '#C9C0BB',
         image: require('../assets/images/solidarity.png'),
-        path: 'SaveFood'
+        path: 'Donations'
     },
     {
         id: 5,
-        name: 'Live Chat',
+        name: 'Contact Us',
         code: '#E9D7D8',
-        image: require('../assets/images/live-chat.png'),
-        path: 'Profile'
+        image: require('../assets/images/contact.png'),
+        path: 'ContactUs'
     },
 
 ]
@@ -76,7 +69,7 @@ class Home extends React.Component {
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => this.props.navigation.navigate('Profile')} style={{ position: 'absolute', right: 0 }}>
                         <Image
-                                style={{ height: 30, width: 30, borderRadius: 40 }}
+                                style={{ height: 40, width:40, borderRadius: 40 }}
                                 source={{ uri: 'https://reactnative.dev/img/tiny_logo.png' }}
                             />
                         </TouchableOpacity>

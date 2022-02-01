@@ -42,12 +42,6 @@ export default class Settings extends Component {
                     </TouchableOpacity>
 
                     <TouchableOpacity activeOpacity={.7}>
-                        {tabsView({ title: 'Privacy & Security' })}
-                        <View style={{ borderBottomWidth: 1, borderColor: 'grey', marginTop: 10 }}>
-                        </View>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity activeOpacity={.7}>
                         {tabsView({ title: 'Logout' })}
                         <View style={{ borderBottomWidth: 1, borderColor: 'grey', marginTop: 10 }}>
                         </View>
