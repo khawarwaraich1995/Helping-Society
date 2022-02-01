@@ -10,7 +10,7 @@ import Button from '../../components/Button';
 
 const countries = ["Egypt", "Canada", "Australia", "Ireland"]
 
-export default class RegisterComplaint extends Component {
+export default class SaveFood extends Component {
     render() {
         return (
             <ScrollView contactContainerStyle={{ flexGrow: 1, backgroundColor: '#fff' }}>
@@ -20,7 +20,7 @@ export default class RegisterComplaint extends Component {
                     </TouchableOpacity>
                     <View style={{ alignSelf: 'center' }}>
                         <Text style={{ fontFamily: 'Ubuntu-Bold', fontSize: 24, color: textColor }}>
-                            Report Issue
+                            Save Food
                         </Text>
                     </View>
                 </View>
@@ -28,7 +28,7 @@ export default class RegisterComplaint extends Component {
                 <View>
                     <SelectDropdown
                         data={countries}
-                        defaultButtonText={"Issues Type"}
+                        defaultButtonText={"Food Type"}
                         renderDropdownIcon={(isOpened) => {
                             return (
                                 <FontAwesome

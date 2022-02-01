@@ -4,7 +4,7 @@ import UserIcon from 'react-native-vector-icons/Feather'
 
 const tabsView = (item) => {
     return (
-        <View style={{ flexDirection: 'row', alignItems: 'center',marginTop:20 }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 20 }}>
             <View>
                 <UserIcon name='user' size={20} color='#000' />
             </View>
@@ -29,7 +29,7 @@ export default class Settings extends Component {
                 </View>
 
                 <View style={{ marginTop: 40, marginHorizontal: 12 }}>
-                    <TouchableOpacity activeOpacity={.7}>
+                    <TouchableOpacity activeOpacity={.7} onPress={()=>this.props.navigation.navigate('Profile')}>
                         {tabsView({ title: 'Profile' })}
                         <View style={{ borderBottomWidth: 1, borderColor: 'grey', marginTop: 10 }}>
                         </View>
