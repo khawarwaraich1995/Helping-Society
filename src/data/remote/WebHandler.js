@@ -9,15 +9,16 @@ export default class WebHandler {
     sendPostDataRequest(url, bodyParams, onSuccess, onFailure) {
         prefs.getSession((result) => {
 
-            // let headers = {
-            //     'Content-Type': 'application/json',
-            //     Accept: 'application/json',
-            //     'Content-Type': 'multipart/form-data',
-            // }
+            let headers = {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                Accept: 'application/json',
+                'Content-Type': 'multipart/form-data',
 
-            // if (result.token) {
-            //     headers.Authorization = "Bearer " + result.token
-            // }
+            }
+
+            if (result.token) {
+                headers.Authorization = "Bearer " + result.token
+            }
 
             console.log("------------API POST REQUEST--------------")
             console.log("URL==>", url)
@@ -26,11 +27,7 @@ export default class WebHandler {
             console.log("TOKEN==>", result.token)
 
             axios.post(url, bodyParams, {
-                "headers": {
-                    "content-type": "application/json",
-                    "Accept": "application/json",
-                    "Authorization" : 'Bearer '+ result.token
-                    },
+                headers: headers
             })
                 .then(async (response) => {
                     const respJson = response.data
@@ -48,11 +45,11 @@ export default class WebHandler {
     }
 
     //////////////////////////////////// Get Method //////////////////////////////////////
-    async sendGetDataRequest(url,  onSuccess, onFailure) {
+    async sendGetDataRequest(url, onSuccess, onFailure) {
         prefs.getSession((result) => {
-            let headers = { 
+            let headers = {
                 Accept: 'application/json',
-                'Content-Type': 'application/x-www-form-urlencoded', 
+                'Content-Type': 'application/x-www-form-urlencoded',
             }
 
             if (result.token) {
@@ -85,12 +82,12 @@ export default class WebHandler {
             console.log("------------API POST REQUEST--------------")
             console.log("URL==>", url)
 
-            axios.post(url,"", {
+            axios.post(url, "", {
                 "headers": {
                     "content-type": "application/json",
                     "Accept": "application/json",
-                    "Authorization" : 'Bearer '+ result.token
-                    },
+                    "Authorization": 'Bearer ' + result.token
+                },
             })
                 .then(async (response) => {
                     const respJson = response.data
@@ -135,8 +132,8 @@ export default class WebHandler {
             "headers": {
                 "content-type": "application/json",
                 "Accept": "application/json",
-                
-                },
+
+            },
             // headers: { 
             //     'Content-Type': 'application/x-www-form-urlencoded' ,
             //     // Accept: 'application/json',

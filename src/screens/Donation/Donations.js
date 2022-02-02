@@ -10,7 +10,7 @@ import Button from '../../components/Button';
 import ImagePicker from 'react-native-image-crop-picker';
 
 const Types = ["Money", "Clothes", "Medical", "Rashan"]
-const Payments = ["Cash", "Card",]
+const Payments = ["Cash", ]
 const Medical = ["Days", "Monthly",]
 
 export default class Donations extends Component {
@@ -117,7 +117,7 @@ export default class Donations extends Component {
                             <View style={{ marginTop: 10, marginHorizontal: 18 }}>
                                 <Input
                                     title={'Amount'}
-                                    placeholderTextColor='#000'
+                                    
                                     inpStyle={{ backgroundColor: '#DCDCDC' }}
                                 />
                             </View>
@@ -127,7 +127,6 @@ export default class Donations extends Component {
                                 <Text style={{ marginBottom: 5, fontSize: 16, fontFamily: 'Ubuntu-Bold', color: '#000' }}>Additional Information</Text>
                                 <Input
                                     title={'Enter Message'}
-                                    placeholderTextColor='#000'
                                     inpStyle={{ backgroundColor: '#DCDCDC', height: 100 }}
                                 />
                             </View>
@@ -151,7 +150,6 @@ export default class Donations extends Component {
                                 <View style={{ marginTop: 10, marginHorizontal: 18 }}>
                                     <Input
                                         title={'Quantity'}
-                                        placeholderTextColor='#000'
                                         inpStyle={{ backgroundColor: '#DCDCDC' }}
                                     />
                                 </View>
@@ -159,7 +157,6 @@ export default class Donations extends Component {
                                 <View style={{ marginTop: 10, marginHorizontal: 18 }}>
                                     <Input
                                         title={'City'}
-                                        placeholderTextColor='#000'
                                         inpStyle={{ backgroundColor: '#DCDCDC' }}
                                     />
                                 </View>
@@ -205,7 +202,6 @@ export default class Donations extends Component {
                                     <Text style={{ marginBottom: 5, fontSize: 16, fontFamily: 'Ubuntu-Bold', color: '#000' }}>Additional Information</Text>
                                     <Input
                                         title={'Enter Message'}
-                                        placeholderTextColor='#000'
                                         inpStyle={{ backgroundColor: '#DCDCDC', height: 100 }}
                                     />
                                 </View>
@@ -260,7 +256,6 @@ export default class Donations extends Component {
                                     <View style={{ marginTop: 10, marginHorizontal: 18 }}>
                                         <Input
                                             title={'Amount'}
-                                            placeholderTextColor='#000'
                                             inpStyle={{ backgroundColor: '#DCDCDC' }}
                                         />
                                     </View>
@@ -268,7 +263,6 @@ export default class Donations extends Component {
                                     <View style={{ marginTop: 10, marginHorizontal: 18 }}>
                                         <Input
                                             title={'City'}
-                                            placeholderTextColor='#000'
                                             inpStyle={{ backgroundColor: '#DCDCDC' }}
                                         />
                                     </View>
@@ -314,7 +308,6 @@ export default class Donations extends Component {
                                         <Text style={{ marginBottom: 5, fontSize: 16, fontFamily: 'Ubuntu-Bold', color: '#000' }}>Additional Information</Text>
                                         <Input
                                             title={'Enter Message'}
-                                            placeholderTextColor='#000'
                                             inpStyle={{ backgroundColor: '#DCDCDC', height: 100 }}
                                         />
                                     </View>
@@ -367,7 +360,6 @@ export default class Donations extends Component {
                                     <View style={{ marginTop: 10, marginHorizontal: 18 }}>
                                         <Input
                                             title={'Quantity'}
-                                            placeholderTextColor='#000'
                                             inpStyle={{ backgroundColor: '#DCDCDC' }}
                                         />
                                     </View>
@@ -375,7 +367,6 @@ export default class Donations extends Component {
                                     <View style={{ marginTop: 10, marginHorizontal: 18 }}>
                                         <Input
                                             title={'City'}
-                                            placeholderTextColor='#000'
                                             inpStyle={{ backgroundColor: '#DCDCDC' }}
                                         />
                                     </View>
@@ -419,7 +410,7 @@ export default class Donations extends Component {
                                         <Text style={{ marginBottom: 5, fontSize: 16, fontFamily: 'Ubuntu-Bold', color: '#000' }}>Additional Information</Text>
                                         <Input
                                             title={'Enter Message'}
-                                            placeholderTextColor='#000'
+                                            
                                             inpStyle={{ backgroundColor: '#DCDCDC', height: 100 }}
                                         />
                                     </View>

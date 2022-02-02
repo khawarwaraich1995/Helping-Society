@@ -1,9 +1,17 @@
-import React from 'react'
+import React ,{Component} from 'react'
 import { Text, View, TouchableOpacity, Image, StyleSheet, FlatList } from 'react-native'
 import { primaryColor, bgWhite, textColor, fontFamily } from '../assets/styles'
 import BellIcon from 'react-native-vector-icons/EvilIcons';
 import { FlatGrid } from 'react-native-super-grid';
 import BackIcon from 'react-native-vector-icons/AntDesign'
+import PNHelper from '../data/remote/PNHelper';
+import WebHandler from '../data/remote/WebHandler';
+import Routes from '../data/remote/Routes';
+import PrefHandler from '../data/local/PrefHandler';
+
+const webHandler = new WebHandler()
+const prefs = new PrefHandler()
+const notiHandler = new PNHelper
 
 const DATA = [
     {
@@ -38,7 +46,24 @@ const DATA = [
 ]
 
 
-class Home extends React.Component {
+export default class home extends Component {
+componentDidMount(){
+    this.sendDevicePNtoServer()
+}
+    sendDevicePNtoServer() {
+        notiHandler.init()
+        notiHandler.loadDeviceInfo((devInfo) => {
+            let body = JSON.stringify({
+                "token": devInfo.userId,
+            });
+            alert('asdad')
+            webHandler.sendPostDataRequest(Routes.SAVE_DEVICE_TOKEN, body, (resp) => {
+                console.log(resp);
+            }, (errorData) => {
+            })
+        })
+    }
+
     renderItem = (item) => {
         return (
             <View>
@@ -58,6 +83,8 @@ class Home extends React.Component {
             </View>
         )
     }
+
+
     render() {
         return (
             <View style={styles.container}>
@@ -68,8 +95,8 @@ class Home extends React.Component {
                             <BellIcon name={'bell'} size={45} color='#000' />
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => this.props.navigation.navigate('Profile')} style={{ position: 'absolute', right: 0 }}>
-                        <Image
-                                style={{ height: 40, width:40, borderRadius: 40 }}
+                            <Image
+                                style={{ height: 40, width: 40, borderRadius: 40 }}
                                 source={{ uri: 'https://reactnative.dev/img/tiny_logo.png' }}
                             />
                         </TouchableOpacity>
@@ -79,7 +106,7 @@ class Home extends React.Component {
                             </Text>
                         </View>
                     </View>
-                    
+
 
                     <View style={{ marginTop: 30 }}>
                         <FlatGrid
@@ -99,7 +126,6 @@ class Home extends React.Component {
     }
 }
 
-export default Home
 
 
 const styles = StyleSheet.create({

@@ -7,16 +7,89 @@ import Input from '../components/Input'
 import Button from '../components/Button'
 import EmailIcon from 'react-native-vector-icons/Fontisto';
 import PasswordIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Routes from '../data/remote/Routes';
+import WebHandler from '../data/remote/WebHandler';
+import PrefHandler from '../data/local/PrefHandler';
+import Helper from '../utils/Helper';
+import { StackActions } from '@react-navigation/native'
+import LoadingPage from '../components/LoadingPage';
+
+const webHandler = new WebHandler()
+const prefs = new PrefHandler()
+const helper = new Helper()
+
 
 
 class Register extends React.Component {
+
     state = {
-        checked: false
+        checked: false,
+        name:'',
+        email:'',
+        password:'',
+        loading:false
+    }
+
+    // Signup Api //
+    handleSignup = () => {
+        const { name, email, password } = this.state;
+        if (name == '') {
+            helper.showToast('You must enter your FullName', 'red', '#fff')
+            return
+        }
+        if (email == '') {
+            helper.showToast('Enter your Email', 'red', '#fff')
+            return
+        }
+        if (!helper.isValidEmail(email)) {
+            helper.showToast('Your Email is not Correct', 'red', '#fff')
+            return
+        }
+        if (password == '') {
+            helper.showToast('Password Required', 'red', '#fff')
+            return
+        }
+        if (password.length < 8) {
+            helper.showToast('Password must be greater than 8', 'red', '#fff')
+            return
+        }
+
+        let webHandler = new WebHandler()
+
+        const bodyParams = JSON.stringify({
+            "name":name,
+            "email": email,
+            "password":password
+        })
+        this.setState({ loading: true })
+        webHandler.sendPostDataRequest(Routes.SIGNUP, bodyParams, (resp) => {
+            console.log('SignUp Success', resp)
+            const prefs = new PrefHandler()
+            prefs.createSession(resp.data, resp.access_token, (isCreated) => {
+                if (isCreated) {
+                    this.props.navigation.dispatch(StackActions.replace('Home'))
+                    this.setState({ loading: false })
+                } else {
+                    alert("something went wrong..")
+                    this.setState({ loading: false })
+                }
+            })
+        }, (errorData) => {
+            this.setState({ loading: false })
+            if (errorData.errors.email) {
+                helper.showToast('Email already exits', 'red', '#fff')
+            }
+            if (errorData.message) {
+                helper.showToast('Something went wronge', 'red', '#fff')
+            }
+        })
+
     }
     render() {
         const { checked } = this.state;
         return (
             <View style={{ flex: 1, backgroundColor: primaryColor }}>
+                {this.state.loading && <LoadingPage message="Signing up..." />}
                 <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                     <View style={{
                         height: 700,
@@ -38,19 +111,15 @@ class Register extends React.Component {
                         </View>
 
                         <View style={{ marginHorizontal: 25, marginTop: 20 }}>
-                            <Input icon={<EmailIcon name="email" size={20} color={textColor} />} title="Full name" type="default" onChange={(txt) => this.setState({ userName: txt })} />
+                            <Input icon={<EmailIcon name="email" size={20} color={textColor} />} title="Full Name" type="default" onChange={(txt) => this.setState({ name: txt })} />
                         </View>
 
                         <View style={{ marginHorizontal: 25, marginTop: 20 }}>
-                            <Input icon={<EmailIcon name="email" size={20} color={textColor} />} title="Choose unique username" type="default" onChange={(txt) => this.setState({ userName: txt })} />
+                            <Input icon={<EmailIcon name="email" size={20} color={textColor} />} title="Email Address" type="email-address" onChange={(txt) => this.setState({ email: txt })} />
                         </View>
 
                         <View style={{ marginHorizontal: 25, marginTop: 20 }}>
-                            <Input icon={<EmailIcon name="email" size={20} color={textColor} />} title="Email address" type="email-address" onChange={(txt) => this.setState({ userName: txt })} />
-                        </View>
-
-                        <View style={{ marginHorizontal: 25, marginTop: 20 }}>
-                            <Input icon={<PasswordIcon name="form-textbox-password" size={20} color={textColor} />} title="Password" type="default" onChange={(txt) => this.setState({ Password: txt })} />
+                            <Input icon={<PasswordIcon name="form-textbox-password" size={20} color={textColor} />} title="Password" type="default" onChange={(txt) => this.setState({ password: txt })} />
                         </View>
 
                         <View style={{ marginHorizontal: 25, marginTop: 20, flexDirection: 'row', alignItems: 'center' }}>
@@ -68,7 +137,7 @@ class Register extends React.Component {
                         </View>
 
                         <View style={{ marginHorizontal: 15, marginTop: 20 }}>
-                            <Button title="Register" onPress={() => this.props.navigation.navigate('Login')} inputStyle={{marginHorizontal: 100}}></Button>
+                            <Button title="Register" onPress={() => this.handleSignup()} inputStyle={{marginHorizontal: 100}}></Button>
                         </View>
 
 
