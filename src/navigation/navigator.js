@@ -10,7 +10,7 @@ import Profile from '../screens/Profile/Profile'
 import SaveFood from '../screens/SaveFood/SaveFood';
 import Donations from '../screens/Donation/Donations';
 import ContactUs from '../screens/ContactUs/ContactUs';
-import Splash from '../screens/Splash/Splash'
+import Splash from '../screens/Splash/Splash';
 
 const Stack = createNativeStackNavigator();
 

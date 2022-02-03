@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Image, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, } from 'react-native';
 import LottieView from 'lottie-react-native'
+
 
 const LoadingPage = (props) => {
 
     return (
         <View style={styles.container}>
-            <LottieView source={require('../assets/animations/lf30_editor_ytrzhxua.json')} autoPlay loop style={{ height: 100, width: '100%' }} />
+            <LottieView source={require('../assets/animations/lf30_editor_dg553vu8.json')} autoPlay loop style={{ height: 100 }} />
             <Text>{props.message ? props.message : ''} </Text>
         </View>
     );

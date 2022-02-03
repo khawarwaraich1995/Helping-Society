@@ -11,19 +11,26 @@ import Routes from '../data/remote/Routes';
 import WebHandler from '../data/remote/WebHandler';
 import PrefHandler from '../data/local/PrefHandler';
 import Helper from '../utils/Helper';
+import { StackActions } from '@react-navigation/native'
 import LoadingPage from '../components/LoadingPage';
 
 const webHandler = new WebHandler()
 const prefs = new PrefHandler()
 const helper = new Helper()
 
+const webHandler = new WebHandler()
+const prefs = new PrefHandler()
+const helper = new Helper()
+
 class Login extends React.Component {
+
     state = {
-        checked: false,
         email: '',
         password: '',
-        loading: false
+        loading: false,
+        checked: false,
     }
+
 
     // Login Api //
     handleLogin() {
@@ -45,18 +52,17 @@ class Login extends React.Component {
             return
         }
 
-        let webHandler = new WebHandler()
 
-        const bodyParams = new FormData()
-        bodyParams.append("email", email)
-        bodyParams.append("password", password)
+        const bodyParams = JSON.stringify({
+            "email": email,
+            "password": password
+        })
         this.setState({ loading: true })
         webHandler.sendPostDataRequest(Routes.LOGIN, bodyParams, (resp) => {
             console.log('Login Success', resp)
-            const prefs = new PrefHandler()
             prefs.createSession(resp.data, resp.access_token, (isCreated) => {
                 if (isCreated) {
-                    this.props.navigation.dispatch(StackActions.replace('HomeScreen'))
+                    this.props.navigation.dispatch(StackActions.replace('Home'))
                     this.setState({ loading: false })
                 } else {
                     alert("something went wrong..")
@@ -79,6 +85,7 @@ class Login extends React.Component {
         const { checked } = this.state;
         return (
             <View style={{ flex: 1, backgroundColor: primaryColor }}>
+                {this.state.loading && <LoadingPage message="Logging in..." />}
                 <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                     {this.state.loading && <LoadingPage message="Logging in..." />}
                     <View style={{
@@ -101,7 +108,7 @@ class Login extends React.Component {
                         </View>
 
                         <View style={{ marginHorizontal: 25, marginTop: 35 }}>
-                            <Input icon={<EmailIcon name="email" size={20} color={textColor} />} title="Username/Email" type="email-address" onChange={(txt) => this.setState({ email: txt })} />
+                            <Input icon={<EmailIcon name="email" size={20} color={textColor} />} title="Email" type="email-address" onChange={(txt) => this.setState({ email: txt })} />
                         </View>
 
                         <View style={{ marginHorizontal: 25, marginTop: 35 }}>
@@ -128,7 +135,7 @@ class Login extends React.Component {
                         </View>
 
                         <View style={{ marginHorizontal: 15, marginTop: 40 }}>
-                            <Button title="Login" onPress={() => { this.handleLogin() }} inputStyle={{ marginHorizontal: 100 }}></Button>
+                            <Button title="Login" onPress={() => this.handleLogin()} inputStyle={{ marginHorizontal: 100 }}></Button>
                         </View>
                     </View>
 
