@@ -18,10 +18,6 @@ const webHandler = new WebHandler()
 const prefs = new PrefHandler()
 const helper = new Helper()
 
-const webHandler = new WebHandler()
-const prefs = new PrefHandler()
-const helper = new Helper()
-
 class Login extends React.Component {
 
     state = {
@@ -115,19 +111,8 @@ class Login extends React.Component {
                             <Input icon={<PasswordIcon name="form-textbox-password" size={20} color={textColor} />} title="Password" type="default" onChange={(txt) => this.setState({ password: txt })} />
                         </View>
 
-                        <View style={{ marginHorizontal: 25, marginTop: 20, flexDirection: 'row', alignItems: 'center' }}>
-
-                            <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
-                                <Checkbox
-                                    status={checked ? 'checked' : 'unchecked'}
-                                    onPress={() => {
-                                        this.setState({ checked: !checked });
-                                    }}
-                                />
-                                <Text style={{ color: textColor, fontFamily: fontFamily, fontSize: 15, textAlign: 'center' }}> Remember me</Text>
-                            </View>
-
-                            <TouchableOpacity
+                        <View style={{ marginHorizontal: 25, marginTop: 20, flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-end' }}>
+                            <TouchableOpacity style={{ alignSelf: 'flex-end' }}
                                 onPress={() => this.props.navigation.navigate('ForgotPassword')}>
                                 <Text style={{ color: textColor, fontFamily: fontFamily, fontSize: 14 }}> Forgot Password?</Text>
                             </TouchableOpacity>

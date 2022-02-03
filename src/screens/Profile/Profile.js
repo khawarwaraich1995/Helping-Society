@@ -76,7 +76,7 @@ export default class Profile extends Component {
     }
 
     let webHandler = new WebHandler()
-    
+
     const bodyParams = new FormData()
     bodyParams.append('image', {
       uri: image,
@@ -140,7 +140,6 @@ export default class Profile extends Component {
           <View style={{ marginTop: 10, marginHorizontal: 18 }}>
             <Input
               title={'Name'}
-              placeholderTextColor='#000'
               value1={this.state.name}
               inpStyle={{ backgroundColor: '#DCDCDC' }}
               onChange={(txt) => this.setState({ name: txt })}
@@ -151,7 +150,6 @@ export default class Profile extends Component {
             <Input
               title={'Email'}
               value1={this.state.email}
-              placeholderTextColor='#000'
               inpStyle={{ backgroundColor: '#DCDCDC' }}
               onChange={(txt) => this.setState({ email: txt })}
             />
@@ -161,7 +159,6 @@ export default class Profile extends Component {
             <Input
               title={'Phone Number'}
               value1={this.state.phone}
-              placeholderTextColor='#000'
               inpStyle={{ backgroundColor: '#DCDCDC' }}
               onChange={(txt) => this.setState({ phone: txt })}
             />
@@ -171,7 +168,6 @@ export default class Profile extends Component {
             <Input
               title={'Address'}
               value1={this.state.address}
-              placeholderTextColor='#000'
               inpStyle={{ backgroundColor: '#DCDCDC' }}
               onChange={(txt) => this.setState({ address: txt })}
             />
@@ -179,7 +175,7 @@ export default class Profile extends Component {
 
         </View>
         <View style={{ marginTop: 20, marginHorizontal: 18 }}>
-          <Button title='Update' onPress={()=>this.handleUpdate()}/>
+          <Button title='Update' onPress={() => this.handleUpdate()} />
         </View>
 
       </ScrollView>

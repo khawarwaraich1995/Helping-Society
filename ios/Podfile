@@ -16,6 +16,8 @@ target 'HelpingSociety' do
 
   pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-async-storage/async-storage'
 
+  pod 'RNShare', :path => '../node_modules/react-native-share'
+
   target 'HelpingSocietyTests' do
     inherit! :complete
     # Pods for testing

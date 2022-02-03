@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, TouchableOpacity, Image } from 'react-native';
 import { primaryColor, textColor } from '../../assets/styles';
 import BackIcon from 'react-native-vector-icons/AntDesign'
+import LocationIcon from 'react-native-vector-icons/EvilIcons'
 import SelectDropdown from 'react-native-select-dropdown'
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Input from '../../components/Input'
@@ -13,6 +14,8 @@ import Routes from '../../data/remote/Routes';
 import PrefHandler from '../../data/local/PrefHandler';
 import Helper from '../../utils/Helper'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
+import GetLocation from 'react-native-get-location'
+import LoadingPage from '../../components/LoadingPage';
 
 const countries = ["Agriculture", "Citizen Rights", "Developement Projects", "Disasters", "Education", "Energy and Power", "Enviornment and Forest", "Health", "FBR"]
 const webHandler = new WebHandler()
@@ -31,6 +34,30 @@ export default class RegisterComplaint extends Component {
         lng: '',
         postalCode: '',
         message: '',
+        loading: false
+    }
+
+    componentDidMount() {
+
+    }
+
+    location = () => {
+        GetLocation.getCurrentPosition({
+            enableHighAccuracy: true,
+            timeout: 15000,
+        })
+            .then(location => {
+                console.log(location);
+                this.setState({
+                    lat: location.latitude,
+                    lng: location.longitude
+                })
+                helper.showToast('Location Recived SucessFully', 'green', '#fff')
+            })
+            .catch(error => {
+                const { code, message } = error;
+                console.warn(code, message);
+            })
     }
 
     imagePickCamera = () => {
@@ -59,7 +86,7 @@ export default class RegisterComplaint extends Component {
 
     // Complaint Api //
     handleComplaint() {
-        const { issueType, address, city, postalCode, message, image1 } = this.state;
+        const { issueType, address, city, postalCode, message, image1, lat, lng } = this.state;
         if (issueType == '') {
             helper.showToast('Enter your Issue Type', 'red', '#fff')
             return
@@ -80,62 +107,21 @@ export default class RegisterComplaint extends Component {
             helper.showToast('Enter your Message', 'red', '#fff')
             return
         }
-        // const bodyParams = JSON.stringify({
-        //     "issue_type": issueType,
-        //     "address": address,
-        //     "city": city,
-        //     "lat": 27,
-        //     "lng": 28,
-        //     "zip_code": postalCode,
-        //     "message": message,
-        // })
 
-        // const params = JSON.stringify({
-        //     "no_of_peoples": "Canada",
-        //     "address": "sdad",
-        //     "city": "asdasd",
-        //     "lat": 27,
-        //     "lng": 28,
-        //     "zip_code": "asdasd",
-        //     "message": "asdasdasd"
-        // });
-
-
-
-        let body = new FormData();
-        body.append('issue_type', 'SelectedTitle');
-        body.append('address', 'SelectedTitle');
-        body.append('city', 'comment');
-        body.append('lat', 'comment');
-        body.append('lng', 'comment');
-        body.append('zip_code', 'comment');
-        body.append('message', 'comment');
-        // photoPath.map((element, index) => {
-        //     path = element.uri
-        // body.append('image', {
-        //     image1,
-        //     name: `parkingIssue1.jpg`,
-        //     type: "image/jpg",
-        // })
-        // })
-
-
-        const bodyParams = new FormData()
-        bodyParams.append('image', {
-            uri: image1,
-            type: 'image/jpg',
-            name: 'image.jpg',
+        const params = JSON.stringify({
+            "issue_type": issueType,
+            "address": address,
+            "city": city,
+            "lat": lat,
+            "lng": lng,
+            "zip_code": postalCode,
+            "message": message
         });
-        bodyParams.append("issue_type", 'issueType')
-        bodyParams.append("address", 'address')
-        bodyParams.append("city", 'city')
-        bodyParams.append("lat", 27)
-        bodyParams.append("lng", 28)
-        bodyParams.append("zip_code", 'postalCode')
-        bodyParams.append("message", 'message')
         this.setState({ loading: true })
         webHandler.sendPostDataRequest(Routes.COMPLAINT_SUBMIT, params, (resp) => {
             console.log('Submit Success', resp)
+            helper.showToast('Complaint Sucessfully Submitted', 'green', '#fff')
+            this.setState({ loading: false })
 
         }, (errorData) => {
             this.setState({ loading: false })
@@ -143,12 +129,13 @@ export default class RegisterComplaint extends Component {
         })
     }
 
-
     render() {
         return (
             <ScrollView
                 keyboardShouldPersistTaps='always'
                 listViewDisplayed={false} contactContainerStyle={{ flexGrow: 1, backgroundColor: '#fff' }}>
+                {this.state.loading && <LoadingPage message="Loading..." />}
+
                 <View style={{ marginTop: 20, alignItems: 'center', flexDirection: 'row', justifyContent: 'center' }}>
                     <TouchableOpacity onPress={() => this.props.navigation.goBack()} style={{ position: 'absolute', left: 20 }}>
                         <BackIcon name={'arrowleft'} size={25} color='#000' />
@@ -192,59 +179,67 @@ export default class RegisterComplaint extends Component {
                     />
                 </View>
 
-                <View style={{  marginHorizontal: 18 }}>
-                    <GooglePlacesAutocomplete
-                        placeholder='Street Address'
-                        fetchDetails={true}
-                        enableHighAccuracyLocation={true}
-                        getAddressText={(text) => console.log(text)}
-                        keyboardShouldPersistTaps='always'
-                        listViewDisplayed={false}
-                        clearButtonMode={'always'}
-                        onPress={(data, details = null) => {
-                            // 'details' is provided when fetchDetails = true
-                            this.setState({
-                                lat: details.geometry.location.lat,
-                                lng: details.geometry.location.lng,
-                                address: data.description
-                            })
-                            console.log(details.geometry.location.lat);
-                            console.log(data.description);
-                        }}
-                        query={{
-                            key: 'AIzaSyCw7O8ydcHBvr2psYkmYhavwCkxZ-wUiuY',
-                            language: 'en',
-                            components: "country:pak",
-                            types: "establishment",
-                        }}
-                        styles={{
-                            textInputContainer: {
-                                backgroundColor: '#DCDCDC',
-                                borderRadius: 5,
-                                padding: 0,
-                            },
-                            textInput: {
-                                backgroundColor: '#DCDCDC',
-                                borderRadius: 5,
-                                marginTop: 5,
-                                marginLeft: 5,
-                                fontSize: 14,
-                                color: '#000'
-                            },
-                            container: {
-                                flex: 0,
-                                zIndex: 1,
-                                marginHorizontal: 0,
-                                elevation: 3,
-                                marginTop: 12,
-                                backgroundColor: '#DCDCDC',
-                                borderRadius: 5,
-                            },
-                            listView: {
-                                backgroundColor: '#DCDCDC',
-                            }
-                        }}
-                    />
+                <View style={{ marginHorizontal: 18, flexDirection: 'row', alignItems: 'center' }}>
+                    <View style={{ flex: 1 }}>
+                        <GooglePlacesAutocomplete
+                            placeholder='Street Address'
+                            fetchDetails={true}
+                            enableHighAccuracyLocation={true}
+                            getAddressText={(text) => console.log(text)}
+                            keyboardShouldPersistTaps='always'
+                            listViewDisplayed={false}
+                            clearButtonMode={'always'}
+                            onPress={(data, details = null) => {
+                                // 'details' is provided when fetchDetails = true
+                                this.setState({
+                                    lat: details.geometry.location.lat,
+                                    lng: details.geometry.location.lng,
+                                    address: data.description
+                                })
+                                console.log(details.geometry.location.lat);
+                                console.log(data.description);
+                            }}
+                            query={{
+                                key: 'AIzaSyCw7O8ydcHBvr2psYkmYhavwCkxZ-wUiuY',
+                                language: 'en',
+                                components: "country:pak",
+                                types: "establishment",
+                            }}
+                            styles={{
+                                textInputContainer: {
+                                    backgroundColor: '#DCDCDC',
+                                    borderRadius: 5,
+                                    padding: 0,
+                                },
+                                textInput: {
+                                    backgroundColor: '#DCDCDC',
+                                    borderRadius: 5,
+                                    marginTop: 5,
+                                    marginLeft: 5,
+                                    fontSize: 14,
+                                    color: '#000'
+                                },
+                                container: {
+                                    flex: 0,
+                                    zIndex: 1,
+                                    marginHorizontal: 0,
+                                    elevation: 3,
+                                    marginTop: 12,
+                                    backgroundColor: '#DCDCDC',
+                                    borderRadius: 5,
+                                },
+                                listView: {
+                                    backgroundColor: '#DCDCDC',
+                                }
+                            }}
+                        />
+                    </View>
+
+                    <View>
+                        <TouchableOpacity onPress={() => this.location()} style={{ marginTop: 10, marginLeft: 5, padding: 15, backgroundColor: '#DCDCDC', elevation: 3, borderRadius: 5, }}>
+                            <LocationIcon name={'location'} size={30} color='#000' />
+                        </TouchableOpacity>
+                    </View>
                 </View>
 
                 <View style={{ marginTop: 10, marginHorizontal: 18 }}>
@@ -259,6 +254,7 @@ export default class RegisterComplaint extends Component {
                     <Input
                         title={'Postal Code'}
                         inpStyle={{ backgroundColor: '#DCDCDC' }}
+                        type={'number-pad'}
                         onChange={(txt) => this.setState({ postalCode: txt })}
                     />
                 </View>
@@ -322,7 +318,7 @@ export default class RegisterComplaint extends Component {
                     </View>
                 </View>
 
-            </ScrollView>
+            </ScrollView >
         );
     }
 }

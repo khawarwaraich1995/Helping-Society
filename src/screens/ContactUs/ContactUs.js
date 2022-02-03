@@ -1,9 +1,32 @@
-import { Text, View, TouchableOpacity } from 'react-native';
+import { Text, View, TouchableOpacity, } from 'react-native';
 import React, { Component } from 'react';
 import BackIcon from 'react-native-vector-icons/AntDesign'
 import { primaryColor, textColor } from '../../assets/styles';
+import call from 'react-native-phone-call'
+import Share from 'react-native-share';
+
+const args = {
+    number: '+923485126286', // String value with the number to call
+    prompt: false // Optional boolean property. Determines if the user should be prompt prior to the call 
+}
+
+const shareOptions = {
+    title: 'Share via',
+    message: 'some message',
+    to: 'asdasdas',
+    social: Share.Social.EMAIL,
+};
 
 export default class ContactUs extends Component {
+    dial = () => {
+        call(args).catch(console.error)
+    }
+
+    email = () => {
+        Share.shareSingle(shareOptions)
+            .then((res) => { console.log(res) })
+            .catch((err) => { err && console.log(err); });
+    }
     render() {
         return (
             <View>
@@ -24,8 +47,8 @@ export default class ContactUs extends Component {
                         </Text>
                     </View>
                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 20 }}>
-                        <Text style={{ fontFamily: 'Ubuntu-SemiBold', fontSize: 16, color: '#000' }}>+9230000000000</Text>
-                        <TouchableOpacity style={{ marginRight: 20, borderWidth: 1, alignSelf: 'flex-start', padding: 7, paddingLeft: 20, paddingRight: 20, borderRadius: 10 }}>
+                        <Text style={{ fontFamily: 'Ubuntu-SemiBold', fontSize: 16, color: '#000' }}>+923485126286</Text>
+                        <TouchableOpacity onPress={() => { this.dial() }} style={{ marginRight: 20, borderWidth: 1, alignSelf: 'flex-start', padding: 7, paddingLeft: 20, paddingRight: 20, borderRadius: 10 }}>
                             <Text style={{ fontFamily: 'Ubuntu-Regular', color: '#000' }}>Dial</Text>
                         </TouchableOpacity>
                     </View>
@@ -38,14 +61,14 @@ export default class ContactUs extends Component {
                         </Text>
                     </View>
                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 20 }}>
-                        <Text style={{ fontFamily: 'Ubuntu-SemiBold', fontSize: 16, color: '#000' }}>Examle@gmail.com</Text>
-                        <TouchableOpacity style={{ marginRight: 20, borderWidth: 1, alignSelf: 'flex-start', padding: 7, paddingLeft: 20, paddingRight: 20, borderRadius: 10 }}>
+                        <Text style={{ fontFamily: 'Ubuntu-SemiBold', fontSize: 16, color: '#000' }}>Suppot@gmail.com</Text>
+                        <TouchableOpacity onPress={() => this.email()} style={{ marginRight: 20, borderWidth: 1, alignSelf: 'flex-start', padding: 7, paddingLeft: 20, paddingRight: 20, borderRadius: 10 }}>
                             <Text style={{ fontFamily: 'Ubuntu-Regular', color: '#000' }}>Mail</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
 
-                <Text style={{textAlign:'center',marginTop:20,fontFamily:'Ubuntu-Regular'}}>Helping Socity will try to provide you best service. For complaint or suggestion you can Call us or Mail us on given. Thanks </Text>
+                <Text style={{ textAlign: 'center', marginTop: 20, fontFamily: 'Ubuntu-Regular' }}>Helping Socity will try to provide you best service. For complaint or suggestion you can Call us or Mail us on given. Thanks </Text>
             </View>
         );
     }

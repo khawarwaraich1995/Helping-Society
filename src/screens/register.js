@@ -19,10 +19,6 @@ const prefs = new PrefHandler()
 const helper = new Helper()
 
 
-const webHandler = new WebHandler()
-const prefs = new PrefHandler()
-const helper = new Helper()
-
 class Register extends React.Component {
 
     state = {
@@ -35,7 +31,7 @@ class Register extends React.Component {
 
     // Signup Api //
     handleSignup = () => {
-        const { name, email, password } = this.state;
+        const { name, email, password, checked } = this.state;
         if (name == '') {
             helper.showToast('You must enter your FullName', 'red', '#fff')
             return
@@ -56,10 +52,14 @@ class Register extends React.Component {
             helper.showToast('Password must be greater than 8', 'red', '#fff')
             return
         }
+        if (checked == false) {
+            helper.showToast('Please accept terms and conditions', 'red', '#fff')
+            return
+        }
 
         let webHandler = new WebHandler()
 
-        const bodyParams = JSON.stringify({
+        const bodyParams = ({
             "name": name,
             "email": email,
             "password": password
@@ -87,69 +87,6 @@ class Register extends React.Component {
             }
         })
 
-    }
-
-    // Signup Api //
-    handleSignup = () => {
-        const { name, email, phone, address, password, confirmpassword } = this.state;
-        if (name == '') {
-            helper.showToast('You must enter your FullName', 'red', '#fff')
-            return
-        }
-        if (email == '') {
-            helper.showToast('Enter your Email', 'red', '#fff')
-            return
-        }
-        if (!helper.isValidEmail(email)) {
-            helper.showToast('Your Email is not Correct', 'red', '#fff')
-            return
-        }
-        if (phone == '') {
-            helper.showToast('You must enter your Phone', 'red', '#fff')
-            return
-        }
-        if (address == '') {
-            helper.showToast('You must enter your Address', 'red', '#fff')
-            return
-        }
-        if (password == '') {
-            helper.showToast('Password Required', 'red', '#fff')
-            return
-        }
-        if (password.length < 8) {
-            helper.showToast('Password must be greater than 8', 'red', '#fff')
-            return
-        }
-        if (confirmpassword == '') {
-            helper.showToast('Confirm Password Required', 'red', '#fff')
-            return
-        }
-
-
-        const bodyParams = new FormData()
-        bodyParams.append("name", name)
-        bodyParams.append("email", email)
-        bodyParams.append("address", address)
-        bodyParams.append("phone", phone)
-        bodyParams.append("password", password)
-        this.setState({ loading: true })
-        webHandler.sendPostDataRequest(Routes.SIGNUP, bodyParams, (resp) => {
-            console.log('SignUp Success', resp)
-            prefs.createSession(resp.data, resp.access_token, (isCreated) => {
-                if (isCreated) {
-                    this.props.navigation.dispatch(StackActions.replace('HomeScreen'))
-                    this.setState({ loading: false })
-                } else {
-                    alert("something went wrong..")
-                    this.setState({ loading: false })
-                }
-            })
-        }, (errorData) => {
-            this.setState({ loading: false })
-            if (errorData.message) {
-                helper.showToast('Something went wronge', 'red', '#fff')
-            }
-        })
     }
 
 

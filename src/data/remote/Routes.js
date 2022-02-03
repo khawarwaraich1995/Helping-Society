@@ -7,5 +7,7 @@ export default {
     SAVE_DEVICE_TOKEN: SERVER + "/api/v1/client/store-device-token",
     FORGETPASSWORD: SERVER + "/api/v1/client/forgot-password",
     PROFILEUPDATE: SERVER + "/api/v1/client/profile-update",
-    COMPLAINT_SUBMIT:SERVER + "/api/v1/client/register-complaint"
+    COMPLAINT_SUBMIT: SERVER + "/api/v1/client/register-complaint",
+    SAVE_FOOD: SERVER + "/api/v1/client/save-food",
+    SAVE_DONATION: SERVER + "/api/v1/client/save-donation",
 }

@@ -13,7 +13,49 @@ export default class WebHandler {
                 'Content-Type': 'application/x-www-form-urlencoded',
                 Accept: 'application/json',
                 'Content-Type': 'multipart/form-data',
+            }
 
+            if (result.token) {
+                headers.Authorization = "Bearer " + result.token
+            }
+
+            console.log("------------API POST REQUEST--------------")
+            console.log("URL==>", url)
+            // console.log("HEADER==>", headers)
+            console.log("BODYPARAMS==>", JSON.stringify(bodyParams))
+            console.log("TOKEN==>", result.token)
+
+            axios.post(url, bodyParams, {
+                // headers: headers
+                "headers": {
+                    "content-type": "application/json",
+                    "Accept": "application/json",
+                    "Authorization": 'Bearer ' + result.token
+                },
+            })
+                .then(async (response) => {
+                    const respJson = response.data
+                    console.log("RESPOSNE==>", JSON.stringify(respJson))
+                    if (respJson.status == true) {
+                        onSuccess(respJson)
+                    } else {
+                        onFailure(respJson)
+                    }
+                }).catch((error) => {
+                    console.log("RESPOSNE Error==>", error);
+                    onFailure(error)
+                })
+        })
+    }
+
+    /////////////////////////////// Post Method ////////////////////////////////
+    sendPostSignupRequest(url, bodyParams, onSuccess, onFailure) {
+        prefs.getSession((result) => {
+
+            let headers = {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                Accept: 'application/json',
+                'Content-Type': 'multipart/form-data',
             }
 
             if (result.token) {
@@ -28,6 +70,11 @@ export default class WebHandler {
 
             axios.post(url, bodyParams, {
                 headers: headers
+                // "headers": {
+                //     "content-type": "application/json",
+                //     "Accept": "application/json",
+                //     "Authorization": 'Bearer ' + result.token
+                // },
             })
                 .then(async (response) => {
                     const respJson = response.data
