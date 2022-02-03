@@ -7,12 +7,89 @@ import Input from '../components/Input'
 import Button from '../components/Button'
 import EmailIcon from 'react-native-vector-icons/Fontisto';
 import PasswordIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Routes from '../data/remote/Routes';
+import WebHandler from '../data/remote/WebHandler';
+import PrefHandler from '../data/local/PrefHandler';
+import Helper from '../utils/Helper';
+import LoadingPage from '../components/LoadingPage';
 
+const webHandler = new WebHandler()
+const prefs = new PrefHandler()
+const helper = new Helper()
 
 class Register extends React.Component {
     state = {
-        checked: false
+        checked: false,
+        name: '',
+        username: '',
+        email: '',
+        password: '',
     }
+
+    // Signup Api //
+    handleSignup = () => {
+        const { name, email, phone, address, password, confirmpassword } = this.state;
+        if (name == '') {
+            helper.showToast('You must enter your FullName', 'red', '#fff')
+            return
+        }
+        if (email == '') {
+            helper.showToast('Enter your Email', 'red', '#fff')
+            return
+        }
+        if (!helper.isValidEmail(email)) {
+            helper.showToast('Your Email is not Correct', 'red', '#fff')
+            return
+        }
+        if (phone == '') {
+            helper.showToast('You must enter your Phone', 'red', '#fff')
+            return
+        }
+        if (address == '') {
+            helper.showToast('You must enter your Address', 'red', '#fff')
+            return
+        }
+        if (password == '') {
+            helper.showToast('Password Required', 'red', '#fff')
+            return
+        }
+        if (password.length < 8) {
+            helper.showToast('Password must be greater than 8', 'red', '#fff')
+            return
+        }
+        if (confirmpassword == '') {
+            helper.showToast('Confirm Password Required', 'red', '#fff')
+            return
+        }
+
+
+        const bodyParams = new FormData()
+        bodyParams.append("name", name)
+        bodyParams.append("email", email)
+        bodyParams.append("address", address)
+        bodyParams.append("phone", phone)
+        bodyParams.append("password", password)
+        this.setState({ loading: true })
+        webHandler.sendPostDataRequest(Routes.SIGNUP, bodyParams, (resp) => {
+            console.log('SignUp Success', resp)
+            prefs.createSession(resp.data, resp.access_token, (isCreated) => {
+                if (isCreated) {
+                    this.props.navigation.dispatch(StackActions.replace('HomeScreen'))
+                    this.setState({ loading: false })
+                } else {
+                    alert("something went wrong..")
+                    this.setState({ loading: false })
+                }
+            })
+        }, (errorData) => {
+            this.setState({ loading: false })
+            if (errorData.message) {
+                helper.showToast('Something went wronge', 'red', '#fff')
+            }
+        })
+    }
+
+
     render() {
         const { checked } = this.state;
         return (
@@ -38,7 +115,7 @@ class Register extends React.Component {
                         </View>
 
                         <View style={{ marginHorizontal: 25, marginTop: 20 }}>
-                            <Input icon={<EmailIcon name="email" size={20} color={textColor} />} title="Full name" type="default" onChange={(txt) => this.setState({ userName: txt })} />
+                            <Input icon={<EmailIcon name="email" size={20} color={textColor} />} title="Full name" type="default" onChange={(txt) => this.setState({ name: txt })} />
                         </View>
 
                         <View style={{ marginHorizontal: 25, marginTop: 20 }}>
@@ -46,11 +123,11 @@ class Register extends React.Component {
                         </View>
 
                         <View style={{ marginHorizontal: 25, marginTop: 20 }}>
-                            <Input icon={<EmailIcon name="email" size={20} color={textColor} />} title="Email address" type="email-address" onChange={(txt) => this.setState({ userName: txt })} />
+                            <Input icon={<EmailIcon name="email" size={20} color={textColor} />} title="Email address" type="email-address" onChange={(txt) => this.setState({ email: txt })} />
                         </View>
 
                         <View style={{ marginHorizontal: 25, marginTop: 20 }}>
-                            <Input icon={<PasswordIcon name="form-textbox-password" size={20} color={textColor} />} title="Password" type="default" onChange={(txt) => this.setState({ Password: txt })} />
+                            <Input icon={<PasswordIcon name="form-textbox-password" size={20} color={textColor} />} title="Password" type="default" onChange={(txt) => this.setState({ password: txt })} />
                         </View>
 
                         <View style={{ marginHorizontal: 25, marginTop: 20, flexDirection: 'row', alignItems: 'center' }}>
@@ -68,7 +145,7 @@ class Register extends React.Component {
                         </View>
 
                         <View style={{ marginHorizontal: 15, marginTop: 20 }}>
-                            <Button title="Register" onPress={() => this.props.navigation.navigate('Login')} inputStyle={{marginHorizontal: 100}}></Button>
+                            <Button title="Register" onPress={() => this.handleSignup()} inputStyle={{ marginHorizontal: 100 }}></Button>
                         </View>
 
 
@@ -78,8 +155,8 @@ class Register extends React.Component {
                         <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
                             <Text style={{ color: '#605f5f', fontFamily: fontFamily, fontSize: 17, textAlign: 'center' }}> Already have an account? </Text>
                             <TouchableOpacity>
-                                <Text style={{ color: 'black', fontFamily: fontFamily, fontSize: 19 }} 
-                                onPress={() => this.props.navigation.navigate('Login')}>
+                                <Text style={{ color: 'black', fontFamily: fontFamily, fontSize: 19 }}
+                                    onPress={() => this.props.navigation.navigate('Login')}>
                                     Login
                                 </Text>
                             </TouchableOpacity>

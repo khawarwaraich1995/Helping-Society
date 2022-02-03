@@ -10,6 +10,7 @@ import Profile from '../screens/Profile/Profile'
 import SaveFood from '../screens/SaveFood/SaveFood';
 import Donations from '../screens/Donation/Donations';
 import ContactUs from '../screens/ContactUs/ContactUs';
+import Splash from '../screens/Splash/Splash'
 
 const Stack = createNativeStackNavigator();
 
@@ -17,7 +18,8 @@ class Navigator extends React.Component {
     render() {
         return (
             <NavigationContainer>
-                <Stack.Navigator screenOptions={{ headerShown: false,animation:'slide_from_right' }}>
+                <Stack.Navigator screenOptions={{ headerShown: false, animation: 'slide_from_right' }}>
+                    <Stack.Screen name="Splash" component={Splash} />
                     <Stack.Screen name="Login" component={Login} />
                     <Stack.Screen name="Register" component={Register} />
                     <Stack.Screen name="ForgotPassword" component={ForgotPassword} />

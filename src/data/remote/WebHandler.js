@@ -29,8 +29,8 @@ export default class WebHandler {
                 "headers": {
                     "content-type": "application/json",
                     "Accept": "application/json",
-                    "Authorization" : 'Bearer '+ result.token
-                    },
+                    "Authorization": 'Bearer ' + result.token
+                },
             })
                 .then(async (response) => {
                     const respJson = response.data
@@ -48,11 +48,11 @@ export default class WebHandler {
     }
 
     //////////////////////////////////// Get Method //////////////////////////////////////
-    async sendGetDataRequest(url,  onSuccess, onFailure) {
+    async sendGetDataRequest(url, onSuccess, onFailure) {
         prefs.getSession((result) => {
-            let headers = { 
+            let headers = {
                 Accept: 'application/json',
-                'Content-Type': 'application/x-www-form-urlencoded', 
+                'Content-Type': 'application/x-www-form-urlencoded',
             }
 
             if (result.token) {
@@ -85,12 +85,12 @@ export default class WebHandler {
             console.log("------------API POST REQUEST--------------")
             console.log("URL==>", url)
 
-            axios.post(url,"", {
+            axios.post(url, "", {
                 "headers": {
                     "content-type": "application/json",
                     "Accept": "application/json",
-                    "Authorization" : 'Bearer '+ result.token
-                    },
+                    "Authorization": 'Bearer ' + result.token
+                },
             })
                 .then(async (response) => {
                     const respJson = response.data
@@ -135,8 +135,8 @@ export default class WebHandler {
             "headers": {
                 "content-type": "application/json",
                 "Accept": "application/json",
-                
-                },
+
+            },
             // headers: { 
             //     'Content-Type': 'application/x-www-form-urlencoded' ,
             //     // Accept: 'application/json',

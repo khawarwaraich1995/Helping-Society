@@ -18,11 +18,11 @@ export default class Helper {
         return re.test(email);
     }
 
-    isValidPassword(password){
+    isValidPassword(password) {
         let re = /^(?=.*[0-9])(?=.*[A-Z])(?=.*[!@#$_&-+-()/="':;?,.<>%^&*])[a-zA-Z0-9!@#$_&-+-()/="':;?,.<>%^&*]{8,100}$/;
         return password.match(re);
-      };
-      
+    };
+
 
     showToast(message, background, color) {
         Snackbar.show({
