@@ -49,12 +49,11 @@ class Login extends React.Component {
         }
 
 
-        const bodyParams = JSON.stringify({
-            "email": email,
-            "password": password
-        })
+        var formdata = new FormData();
+        formdata.append('email', email)
+        formdata.append('password', password)
         this.setState({ loading: true })
-        webHandler.sendPostDataRequest(Routes.LOGIN, bodyParams, (resp) => {
+        webHandler.sendPostDataRequest(Routes.LOGIN, formdata, (resp) => {
             console.log('Login Success', resp)
             prefs.createSession(resp.data, resp.access_token, (isCreated) => {
                 if (isCreated) {

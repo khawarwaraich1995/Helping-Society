@@ -18,6 +18,8 @@ target 'HelpingSociety' do
 
   pod 'RNShare', :path => '../node_modules/react-native-share'
 
+  pod 'react-native-geolocation', :path => '../node_modules/@react-native-community/geolocation'
+
   target 'HelpingSocietyTests' do
     inherit! :complete
     # Pods for testing
