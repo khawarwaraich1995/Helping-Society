@@ -10,8 +10,7 @@ export default class WebHandler {
         prefs.getSession((result) => {
 
             let headers = {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                Accept: 'application/json',
+                'Accept': 'application/json',
                 'Content-Type': 'multipart/form-data',
             }
 
@@ -25,21 +24,25 @@ export default class WebHandler {
             console.log("BODYPARAMS==>", JSON.stringify(bodyParams))
             console.log("TOKEN==>", result.token)
 
-            axios.post(url, bodyParams, {
-                // headers: headers
-                "headers": {
-                    "content-type": "application/json",
-                    "Accept": "application/json",
-                    "Authorization": 'Bearer ' + result.token
-                },
-            })
-                .then(async (response) => {
-                    const respJson = response.data
-                    console.log("RESPOSNE==>", JSON.stringify(respJson))
-                    if (respJson.status == true) {
-                        onSuccess(respJson)
+            let requestOptions = {
+                method: 'POST',
+                headers: headers,
+                body: bodyParams
+              };
+
+            fetch(url, requestOptions)
+                .then((response) => {
+                //    console.log("RESPOSNE==>", JSON.stringify(response))
+                return response.json();
+                    // const respJson = response.data
+                    // console.log("RESPOSNE==>", JSON.stringify(respJson))
+                   
+                }).then((res) => {
+                     console.log("RESPOSNE==>", JSON.stringify(res))
+                    if (res.status == true) {
+                        onSuccess(res)
                     } else {
-                        onFailure(respJson)
+                        onFailure(res)
                     }
                 }).catch((error) => {
                     console.log("RESPOSNE Error==>", error);
