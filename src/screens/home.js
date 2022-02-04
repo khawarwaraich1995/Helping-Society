@@ -1,4 +1,4 @@
-import React ,{Component} from 'react'
+import React, { Component } from 'react'
 import { Text, View, TouchableOpacity, Image, StyleSheet, FlatList } from 'react-native'
 import { primaryColor, bgWhite, textColor, fontFamily } from '../assets/styles'
 import BellIcon from 'react-native-vector-icons/EvilIcons';
@@ -47,16 +47,15 @@ const DATA = [
 
 
 export default class home extends Component {
-componentDidMount(){
-    this.sendDevicePNtoServer()
-}
-    sendDevicePNtoServer() {
+    componentDidMount() {
+        this.sendDevicePNtoServer()
+    }
+    sendDevicePNtoServer = () => {
         notiHandler.init()
         notiHandler.loadDeviceInfo((devInfo) => {
             let body = JSON.stringify({
                 "token": devInfo.userId,
             });
-            alert('asdad')
             webHandler.sendPostDataRequest(Routes.SAVE_DEVICE_TOKEN, body, (resp) => {
                 console.log(resp);
             }, (errorData) => {
