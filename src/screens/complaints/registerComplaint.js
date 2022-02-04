@@ -108,17 +108,29 @@ export default class RegisterComplaint extends Component {
             return
         }
 
-        const params = JSON.stringify({
-            "issue_type": issueType,
-            "address": address,
-            "city": city,
-            "lat": lat,
-            "lng": lng,
-            "zip_code": postalCode,
-            "message": message
-        });
+        // const params = JSON.stringify({
+        //     "issue_type": issueType,
+        //     "address": address,
+        //     "city": city,
+        //     "lat": lat,
+        //     "lng": lng,
+        //     "zip_code": postalCode,
+        //     "message": message
+        // });
+
+        var formdata = new FormData();
+        formdata.append('issue_type', issueType)
+        formdata.append('address', address)
+        formdata.append('city', city)
+        formdata.append('lat', lat)
+        formdata.append('lng', lng)
+        formdata.append('zip_code', postalCode)
+        formdata.append('message', message)
+        formdata.append('image', {uri:image1, name: 'ComplaintPNG', type: 'image/jpeg'})
+
+
         this.setState({ loading: true })
-        webHandler.sendPostDataRequest(Routes.COMPLAINT_SUBMIT, params, (resp) => {
+        webHandler.sendPostDataRequest(Routes.COMPLAINT_SUBMIT, formdata, (resp) => {
             console.log('Submit Success', resp)
             helper.showToast('Complaint Sucessfully Submitted', 'green', '#fff')
             this.setState({ loading: false })
