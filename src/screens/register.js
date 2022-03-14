@@ -59,13 +59,12 @@ class Register extends React.Component {
 
         let webHandler = new WebHandler()
 
-        const bodyParams = ({
-            "name": name,
-            "email": email,
-            "password": password
-        })
+        var formdata = new FormData();
+        formdata.append('name', name)
+        formdata.append('email', email)
+        formdata.append('password', password)
         this.setState({ loading: true })
-        webHandler.sendPostDataRequest(Routes.SIGNUP, bodyParams, (resp) => {
+        webHandler.sendPostDataRequest(Routes.SIGNUP, formdata, (resp) => {
             console.log('SignUp Success', resp)
             const prefs = new PrefHandler()
             prefs.createSession(resp.data, resp.access_token, (isCreated) => {

@@ -25,6 +25,7 @@ const helper = new Helper()
 export default class Donations extends Component {
     state = {
         image: '',
+        image1: '',
         type: 'Clothes',
         address: '',
         quantity: '',
@@ -34,7 +35,7 @@ export default class Donations extends Component {
     }
 
     imagePickCamera = () => {
-        ImagePicker.openPicker({
+        ImagePicker.openCamera({
             width: 300,
             height: 400,
             cropping: true
@@ -45,10 +46,23 @@ export default class Donations extends Component {
         })
     }
 
+    imagePickCamera1 = () => {
+        ImagePicker.openPicker({
+            width: 300,
+            height: 400,
+            cropping: true
+        }).then(image => {
+            this.setState({ image1: image.path })
+        }).catch((error) => {
+            console.log(error);
+        })
+    }
+
 
     // Donation Api //
     handleDonation() {
-        const { type, address, quantity, donationAmount, message, image1, } = this.state;
+        const { type, address, quantity, donationAmount, message, } = this.state;
+        let image = this.state.image
         if (type == '') {
             helper.showToast('Enter your Issue Type', 'red', '#fff')
             return
@@ -61,6 +75,12 @@ export default class Donations extends Component {
             helper.showToast('Enter your Message', 'red', '#fff')
             return
         }
+        if (this.state.image1) {
+            image = this.state.image1
+        }
+        else {
+            image = this.state.image
+        }
         const params = JSON.stringify({
             "type": type,
             "address": address,
@@ -68,8 +88,17 @@ export default class Donations extends Component {
             "donation_amount": donationAmount,
             "message": message
         });
+
+        var formdata = new FormData();
+        formdata.append('type', type)
+        formdata.append('address', address)
+        formdata.append('quantity', quantity)
+        formdata.append('donation_amount', donationAmount)
+        formdata.append('message', message)
+        formdata.append('image', { uri: image, name: 'DonationPNG', type: 'image/jpeg' })
+        // formdata.append('image', { uri: image1, name: 'DonationPNG', type: 'image/jpeg' })
         this.setState({ loading: true })
-        webHandler.sendPostDataRequest(Routes.SAVE_DONATION, params, (resp) => {
+        webHandler.sendPostDataRequest(Routes.SAVE_DONATION, formdata, (resp) => {
             console.log('Submit Success', resp)
             helper.showToast('Sucessfully Submitted', 'green', '#fff')
             this.setState({ loading: false })
@@ -200,39 +229,41 @@ export default class Donations extends Component {
                             <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: 20 }}>
 
 
-                                <TouchableOpacity onPress={() => this.imagePickCamera()}>
-                                    {this.state.image ?
-                                        <View>
-                                            <Image source={{ uri: this.state.image }} style={{ height: 63, width: 63, borderRadius: 50, }} />
-                                        </View>
-                                        :
-                                        <View>
-                                            <View style={{ backgroundColor: '#78F2C3', alignSelf: 'flex-start', padding: 15, borderRadius: 50, alignSelf: 'center' }}>
-                                                <Image style={{ height: 30, width: 30 }} source={require('../../assets/images/camera.png')} />
-                                            </View>
+                                {this.state.image1 ? null :
+                                    <TouchableOpacity onPress={() => this.imagePickCamera()}>
+                                        {this.state.image ?
                                             <View>
-                                                <Text style={{ textAlign: 'center', fontFamily: 'Ubuntu-Regular', color: '#000', marginTop: 5, fontSize: 12 }}>Use{'\n'}Camera</Text>
+                                                <Image source={{ uri: this.state.image }} style={{ height: 63, width: 63, borderRadius: 50, }} />
                                             </View>
-                                        </View>}
-                                </TouchableOpacity>
+                                            :
+                                            <View>
+                                                <View style={{ backgroundColor: '#78F2C3', alignSelf: 'flex-start', padding: 15, borderRadius: 50, alignSelf: 'center' }}>
+                                                    <Image style={{ height: 30, width: 30 }} source={require('../../assets/images/camera.png')} />
+                                                </View>
+                                                <View>
+                                                    <Text style={{ textAlign: 'center', fontFamily: 'Ubuntu-Regular', color: '#000', marginTop: 5, fontSize: 12 }}>Use{'\n'}Camera</Text>
+                                                </View>
+                                            </View>}
+                                    </TouchableOpacity>}
 
-                                <TouchableOpacity onPress={() => this.imagePickCamera()}>
-                                    {this.state.image ?
-                                        <View>
-                                            <Image source={{ uri: this.state.image }} style={{ height: 63, width: 63, borderRadius: 50, }} />
-                                        </View>
-                                        :
-                                        <View>
-                                            <View style={{ backgroundColor: '#78F2C3', alignSelf: 'flex-start', padding: 15, borderRadius: 50, alignSelf: 'center' }}>
-                                                <Image style={{ height: 30, width: 30 }} source={require('../../assets/images/image-gallery.png')} />
-                                            </View>
+                                {this.state.image ? null :
+                                    <TouchableOpacity onPress={() => this.imagePickCamera1()}>
+                                        {this.state.image1 ?
                                             <View>
-                                                <Text style={{ textAlign: 'center', fontFamily: 'Ubuntu-Regular', color: '#000', marginTop: 5, fontSize: 12 }}>Insert{'\n'}Image</Text>
+                                                <Image source={{ uri: this.state.image1 }} style={{ height: 63, width: 63, borderRadius: 50, }} />
                                             </View>
-                                        </View>}
-                                </TouchableOpacity>
+                                            :
+                                            <View>
+                                                <View style={{ backgroundColor: '#78F2C3', alignSelf: 'flex-start', padding: 15, borderRadius: 50, alignSelf: 'center' }}>
+                                                    <Image style={{ height: 30, width: 30 }} source={require('../../assets/images/image-gallery.png')} />
+                                                </View>
+                                                <View>
+                                                    <Text style={{ textAlign: 'center', fontFamily: 'Ubuntu-Regular', color: '#000', marginTop: 5, fontSize: 12 }}>Insert{'\n'}Image</Text>
+                                                </View>
+                                            </View>}
+                                    </TouchableOpacity>}
+
                             </View>
-
 
                             <View style={{ marginTop: 10, marginHorizontal: 18 }}>
                                 <Text style={{ marginBottom: 5, fontSize: 16, fontFamily: 'Ubuntu-Bold', color: '#000' }}>Additional Information</Text>
@@ -358,37 +389,39 @@ export default class Donations extends Component {
                                 <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: 20 }}>
 
 
-                                    <TouchableOpacity onPress={() => this.imagePickCamera()}>
-                                        {this.state.image ?
-                                            <View>
-                                                <Image source={{ uri: this.state.image }} style={{ height: 63, width: 63, borderRadius: 50, }} />
-                                            </View>
-                                            :
-                                            <View>
-                                                <View style={{ backgroundColor: '#78F2C3', alignSelf: 'flex-start', padding: 15, borderRadius: 50, alignSelf: 'center' }}>
-                                                    <Image style={{ height: 30, width: 30 }} source={require('../../assets/images/camera.png')} />
-                                                </View>
+                                    {this.state.image1 ? null :
+                                        <TouchableOpacity onPress={() => this.imagePickCamera()}>
+                                            {this.state.image ?
                                                 <View>
-                                                    <Text style={{ textAlign: 'center', fontFamily: 'Ubuntu-Regular', color: '#000', marginTop: 5, fontSize: 12 }}>Use{'\n'}Camera</Text>
+                                                    <Image source={{ uri: this.state.image }} style={{ height: 63, width: 63, borderRadius: 50, }} />
                                                 </View>
-                                            </View>}
-                                    </TouchableOpacity>
+                                                :
+                                                <View>
+                                                    <View style={{ backgroundColor: '#78F2C3', alignSelf: 'flex-start', padding: 15, borderRadius: 50, alignSelf: 'center' }}>
+                                                        <Image style={{ height: 30, width: 30 }} source={require('../../assets/images/camera.png')} />
+                                                    </View>
+                                                    <View>
+                                                        <Text style={{ textAlign: 'center', fontFamily: 'Ubuntu-Regular', color: '#000', marginTop: 5, fontSize: 12 }}>Use{'\n'}Camera</Text>
+                                                    </View>
+                                                </View>}
+                                        </TouchableOpacity>}
 
-                                    <TouchableOpacity onPress={() => this.imagePickCamera()}>
-                                        {this.state.image ?
-                                            <View>
-                                                <Image source={{ uri: this.state.image }} style={{ height: 63, width: 63, borderRadius: 50, }} />
-                                            </View>
-                                            :
-                                            <View>
-                                                <View style={{ backgroundColor: '#78F2C3', alignSelf: 'flex-start', padding: 15, borderRadius: 50, alignSelf: 'center' }}>
-                                                    <Image style={{ height: 30, width: 30 }} source={require('../../assets/images/image-gallery.png')} />
-                                                </View>
+                                    {this.state.image ? null :
+                                        <TouchableOpacity onPress={() => this.imagePickCamera1()}>
+                                            {this.state.image1 ?
                                                 <View>
-                                                    <Text style={{ textAlign: 'center', fontFamily: 'Ubuntu-Regular', color: '#000', marginTop: 5, fontSize: 12 }}>Insert{'\n'}Image</Text>
+                                                    <Image source={{ uri: this.state.image1 }} style={{ height: 63, width: 63, borderRadius: 50, }} />
                                                 </View>
-                                            </View>}
-                                    </TouchableOpacity>
+                                                :
+                                                <View>
+                                                    <View style={{ backgroundColor: '#78F2C3', alignSelf: 'flex-start', padding: 15, borderRadius: 50, alignSelf: 'center' }}>
+                                                        <Image style={{ height: 30, width: 30 }} source={require('../../assets/images/image-gallery.png')} />
+                                                    </View>
+                                                    <View>
+                                                        <Text style={{ textAlign: 'center', fontFamily: 'Ubuntu-Regular', color: '#000', marginTop: 5, fontSize: 12 }}>Insert{'\n'}Image</Text>
+                                                    </View>
+                                                </View>}
+                                        </TouchableOpacity>}
                                 </View>
 
 
@@ -511,37 +544,39 @@ export default class Donations extends Component {
                                 </View>
 
                                 <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: 20 }}>
-                                    <TouchableOpacity onPress={() => this.imagePickCamera()}>
-                                        {this.state.image ?
-                                            <View>
-                                                <Image source={{ uri: this.state.image }} style={{ height: 63, width: 63, borderRadius: 50, }} />
-                                            </View>
-                                            :
-                                            <View>
-                                                <View style={{ backgroundColor: '#78F2C3', alignSelf: 'flex-start', padding: 15, borderRadius: 50, alignSelf: 'center' }}>
-                                                    <Image style={{ height: 30, width: 30 }} source={require('../../assets/images/camera.png')} />
-                                                </View>
+                                    {this.state.image1 ? null :
+                                        <TouchableOpacity onPress={() => this.imagePickCamera()}>
+                                            {this.state.image ?
                                                 <View>
-                                                    <Text style={{ textAlign: 'center', fontFamily: 'Ubuntu-Regular', color: '#000', marginTop: 5, fontSize: 12 }}>Use{'\n'}Camera</Text>
+                                                    <Image source={{ uri: this.state.image }} style={{ height: 63, width: 63, borderRadius: 50, }} />
                                                 </View>
-                                            </View>}
-                                    </TouchableOpacity>
+                                                :
+                                                <View>
+                                                    <View style={{ backgroundColor: '#78F2C3', alignSelf: 'flex-start', padding: 15, borderRadius: 50, alignSelf: 'center' }}>
+                                                        <Image style={{ height: 30, width: 30 }} source={require('../../assets/images/camera.png')} />
+                                                    </View>
+                                                    <View>
+                                                        <Text style={{ textAlign: 'center', fontFamily: 'Ubuntu-Regular', color: '#000', marginTop: 5, fontSize: 12 }}>Use{'\n'}Camera</Text>
+                                                    </View>
+                                                </View>}
+                                        </TouchableOpacity>}
 
-                                    <TouchableOpacity onPress={() => this.imagePickCamera()}>
-                                        {this.state.image ?
-                                            <View>
-                                                <Image source={{ uri: this.state.image }} style={{ height: 63, width: 63, borderRadius: 50, }} />
-                                            </View>
-                                            :
-                                            <View>
-                                                <View style={{ backgroundColor: '#78F2C3', alignSelf: 'flex-start', padding: 15, borderRadius: 50, alignSelf: 'center' }}>
-                                                    <Image style={{ height: 30, width: 30 }} source={require('../../assets/images/image-gallery.png')} />
-                                                </View>
+                                    {this.state.image ? null :
+                                        <TouchableOpacity onPress={() => this.imagePickCamera1()}>
+                                            {this.state.image1 ?
                                                 <View>
-                                                    <Text style={{ textAlign: 'center', fontFamily: 'Ubuntu-Regular', color: '#000', marginTop: 5, fontSize: 12 }}>Insert{'\n'}Image</Text>
+                                                    <Image source={{ uri: this.state.image1 }} style={{ height: 63, width: 63, borderRadius: 50, }} />
                                                 </View>
-                                            </View>}
-                                    </TouchableOpacity>
+                                                :
+                                                <View>
+                                                    <View style={{ backgroundColor: '#78F2C3', alignSelf: 'flex-start', padding: 15, borderRadius: 50, alignSelf: 'center' }}>
+                                                        <Image style={{ height: 30, width: 30 }} source={require('../../assets/images/image-gallery.png')} />
+                                                    </View>
+                                                    <View>
+                                                        <Text style={{ textAlign: 'center', fontFamily: 'Ubuntu-Regular', color: '#000', marginTop: 5, fontSize: 12 }}>Insert{'\n'}Image</Text>
+                                                    </View>
+                                                </View>}
+                                        </TouchableOpacity>}
                                 </View>
 
 

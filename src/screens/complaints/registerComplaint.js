@@ -16,6 +16,8 @@ import Helper from '../../utils/Helper'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
 import GetLocation from 'react-native-get-location'
 import LoadingPage from '../../components/LoadingPage';
+import Geolocation from '@react-native-community/geolocation';
+import Geocoder from 'react-native-geocoding';
 
 const countries = ["Agriculture", "Citizen Rights", "Developement Projects", "Disasters", "Education", "Energy and Power", "Enviornment and Forest", "Health", "FBR"]
 const webHandler = new WebHandler()
@@ -42,6 +44,39 @@ export default class RegisterComplaint extends Component {
     }
 
     location = () => {
+        // Geolocation.getCurrentPosition(
+        //     (position) => {
+        //         console.log(position);
+        //         this.setState({
+        //             lat: position.coords.latitude,
+        //             lng: position.coords.longitude,
+        //         });
+        //         Geocoder.init("AIzaSyA2HDnXZG0kGW5uwA4NVGYP3TeqPKZUMmg");
+        //         Geocoder.from(position.coords.latitude, position.coords.longitude)
+        //             .then(json => {
+        //                 console.log(json);
+        //                 var addressComponent = json.results[0].address_components;
+        //                 this.setState({
+        //                     address: addressComponent
+        //                 })
+        //                 console.log(addressComponent);
+        //             })
+        //             .catch(error => console.warn(error));
+        //     },
+        //     (error) => {
+        //         // See error code charts below.
+        //         this.setState({
+        //             error: error.message
+        //         }),
+        //             console.log(error.code, error.message);
+        //     },
+        //     {
+        //         enableHighAccuracy: false,
+        //         timeout: 10000,
+        //         maximumAge: 100000
+        //     }
+        // );
+        // Geolocation.getCurrentPosition(info => console.log(info));
         GetLocation.getCurrentPosition({
             enableHighAccuracy: true,
             timeout: 15000,
@@ -108,17 +143,20 @@ export default class RegisterComplaint extends Component {
             return
         }
 
-        const params = JSON.stringify({
-            "issue_type": issueType,
-            "address": address,
-            "city": city,
-            "lat": lat,
-            "lng": lng,
-            "zip_code": postalCode,
-            "message": message
-        });
+
+        var formdata = new FormData();
+        formdata.append('issue_type', issueType)
+        formdata.append('address', address)
+        formdata.append('city', city)
+        formdata.append('lat', lat)
+        formdata.append('lng', lng)
+        formdata.append('zip_code', postalCode)
+        formdata.append('message', message)
+        formdata.append('image', { uri: image1, name: 'ComplaintPNG', type: 'image/jpeg' })
+
+
         this.setState({ loading: true })
-        webHandler.sendPostDataRequest(Routes.COMPLAINT_SUBMIT, params, (resp) => {
+        webHandler.sendPostDataRequest(Routes.COMPLAINT_SUBMIT, formdata, (resp) => {
             console.log('Submit Success', resp)
             helper.showToast('Complaint Sucessfully Submitted', 'green', '#fff')
             this.setState({ loading: false })
