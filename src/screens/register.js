@@ -6,6 +6,7 @@ import LottieView from 'lottie-react-native'
 import Input from '../components/Input'
 import Button from '../components/Button'
 import EmailIcon from 'react-native-vector-icons/Fontisto';
+import UserIcon from 'react-native-vector-icons/Feather';
 import PasswordIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Routes from '../data/remote/Routes';
 import WebHandler from '../data/remote/WebHandler';
@@ -115,7 +116,7 @@ class Register extends React.Component {
                         </View>
 
                         <View style={{ marginHorizontal: 25, marginTop: 20 }}>
-                            <Input icon={<EmailIcon name="email" size={20} color={textColor} />} title="Full Name" type="default" onChange={(txt) => this.setState({ name: txt })} />
+                            <Input icon={<UserIcon name="user" size={20} color={textColor} />} title="Full Name" type="default" onChange={(txt) => this.setState({ name: txt })} />
                         </View>
 
                         <View style={{ marginHorizontal: 25, marginTop: 20 }}>

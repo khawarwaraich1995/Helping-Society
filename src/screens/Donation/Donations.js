@@ -61,8 +61,7 @@ export default class Donations extends Component {
 
     // Donation Api //
     handleDonation() {
-        const { type, address, quantity, donationAmount, message, } = this.state;
-        let image = this.state.image
+        const { type, address, quantity, donationAmount, message,image,image1 } = this.state;
         if (type == '') {
             helper.showToast('Enter your Issue Type', 'red', '#fff')
             return
@@ -74,12 +73,6 @@ export default class Donations extends Component {
         if (message == '') {
             helper.showToast('Enter your Message', 'red', '#fff')
             return
-        }
-        if (this.state.image1) {
-            image = this.state.image1
-        }
-        else {
-            image = this.state.image
         }
         const params = JSON.stringify({
             "type": type,
@@ -95,7 +88,7 @@ export default class Donations extends Component {
         formdata.append('quantity', quantity)
         formdata.append('donation_amount', donationAmount)
         formdata.append('message', message)
-        formdata.append('image', { uri: image, name: 'DonationPNG', type: 'image/jpeg' })
+        formdata.append('image', { uri: image1 == '' ? image :image1, name: 'DonationPNG', type: 'image/jpeg' })
         // formdata.append('image', { uri: image1, name: 'DonationPNG', type: 'image/jpeg' })
         this.setState({ loading: true })
         webHandler.sendPostDataRequest(Routes.SAVE_DONATION, formdata, (resp) => {
@@ -192,7 +185,6 @@ export default class Donations extends Component {
                                         query={{
                                             key: 'AIzaSyCw7O8ydcHBvr2psYkmYhavwCkxZ-wUiuY',
                                             language: 'en',
-                                            components: "country:pak",
                                             types: "establishment",
                                         }}
                                         styles={{

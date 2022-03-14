@@ -22,16 +22,16 @@ export default class PNHelper {
 
     loadDeviceInfo(listener) {
         notificationIDListener = listener
-
+        
         OneSignal.getDeviceState().then((deviceInfo) => {
             if (deviceInfo.isSubscribed) {
-
+               
                 let data = { userId: deviceInfo.userId, pushToken: deviceInfo.pushToken }
                 notificationIDListener(data)
             }
-
+           
         }).catch((error) => {
-
+            
             console.log(error)
         })
     }

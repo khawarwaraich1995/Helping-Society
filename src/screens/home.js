@@ -50,13 +50,14 @@ export default class home extends Component {
     componentDidMount() {
         this.sendDevicePNtoServer()
     }
-    sendDevicePNtoServer = () => {
+
+    sendDevicePNtoServer() {
         notiHandler.init()
         notiHandler.loadDeviceInfo((devInfo) => {
             let body = JSON.stringify({
                 "token": devInfo.userId,
             });
-            webHandler.sendPostDataRequest(Routes.SAVE_DEVICE_TOKEN, body, (resp) => {
+            webHandler.sendPostDataRequestNoti(Routes.SAVE_DEVICE_TOKEN, body, (resp) => {
                 console.log(resp);
             }, (errorData) => {
             })
@@ -89,17 +90,15 @@ export default class home extends Component {
             <View style={styles.container}>
                 <View style={{ margin: 20 }}>
                     {/* Top Bar */}
-                    <View style={{ marginTop: 20, alignItems: 'center', flexDirection: 'row', justifyContent: 'center' }}>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Notification')} style={{ position: 'absolute', left: 0 }}>
-                            <BellIcon name={'bell'} size={45} color='#000' />
-                        </TouchableOpacity>
+                    <View style={{ marginTop: 20, alignItems: 'center', flexDirection: 'row',}}>
+                       
                         <TouchableOpacity onPress={() => this.props.navigation.navigate('Profile')} style={{ position: 'absolute', right: 0 }}>
                             <Image
                                 style={{ height: 40, width: 40, borderRadius: 40 }}
                                 source={{ uri: 'https://reactnative.dev/img/tiny_logo.png' }}
                             />
                         </TouchableOpacity>
-                        <View style={{ alignSelf: 'center' }}>
+                        <View style={{ }}>
                             <Text style={{ fontFamily: 'Ubuntu-Bold', fontSize: 22, color: textColor }}>
                                 Welcome, Khawar
                             </Text>

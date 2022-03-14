@@ -18,9 +18,7 @@ export default class Notifications extends Component {
         return (
             <View style={{ flex: 1, backgroundColor: '#fff' }}>
                 <View style={{ marginTop: 20, alignItems: 'center', flexDirection: 'row', justifyContent: 'center' }}>
-                    {/* <TouchableOpacity onPress={() => this.props.navigation.navigate('RegisterComplaint')} style={{ position: 'absolute', right: 20 }}>
-                        <BackIcon name={'pluscircleo'} size={25} color='#000' />
-                    </TouchableOpacity> */}
+                    
                     <View style={{ alignSelf: 'center' }}>
                         <Text style={{ fontFamily: 'Ubuntu-Bold', fontSize: 24, color: textColor }}>
                             History
@@ -30,28 +28,12 @@ export default class Notifications extends Component {
 
                 <View style={{flex:1}}>
                     <Tab.Navigator>
-                        <Tab.Screen name="Accepted" component={Accepted} />
-                        <Tab.Screen name="Pending" component={Pending} />
-                        <Tab.Screen name="Declined" component={Declined} />
+                        <Tab.Screen name="Complaints" component={Accepted} />
+                        <Tab.Screen name="Saved Food" component={Pending} />
+                        <Tab.Screen name="Donations" component={Declined} />
                     </Tab.Navigator>
                 </View>
 
-                {/* <View style={{ alignSelf: 'center', marginTop: 20 }}>
-                    <Text style={{ fontFamily: 'Ubuntu-Bold', fontSize: 24, color: textColor }}>
-                        Complaints
-                    </Text>
-                </View>
-
-                <View style={{ marginTop: 30 }}>
-                    <TouchableOpacity style={{ flexGrow: 1, alignSelf: 'flex-end' }}>
-                        <Button title="New Complaint" onPress={() => this.props.navigation.navigate('RegisterComplaint')} inputStyle={{ marginHorizontal: 10}}></Button>
-                    </TouchableOpacity>
-
-                </View> */}
-                {/* 
-                <View style={{ margin: 20, backgroundColor: primaryColor, height: 80, borderRadius: 20}}>
-
-                </View> */}
             </View>
         );
     }

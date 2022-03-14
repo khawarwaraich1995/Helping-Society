@@ -50,6 +50,36 @@ export default class WebHandler {
                 })
         })
     }
+     /////////////////////////////// Post Method ////////////////////////////////
+     sendPostDataRequestNoti(url, bodyParams, onSuccess, onFailure) {
+        prefs.getSession((result) => {
+
+            console.log("------------API POST REQUEST--------------")
+            console.log("URL==>", url)
+            console.log("BODYPARAMS==>", JSON.stringify(bodyParams))
+            console.log("TOKEN==>", result.token)
+
+            axios.post(url, bodyParams, {
+                "headers": {
+                    "content-type": "application/json",
+                    "Accept": "application/json",
+                    "Authorization" : 'Bearer '+ result.token
+                    },
+            })
+                .then(async (response) => {
+                    const respJson = response.data
+                    console.log("RESPOSNE==>", JSON.stringify(respJson))
+                    if (respJson.status == true) {
+                        onSuccess(respJson)
+                    } else {
+                        onFailure(respJson)
+                    }
+                }).catch((error) => {
+                    console.log("RESPOSNE Error==>", error);
+                    onFailure(error)
+                })
+        })
+    }
 
     /////////////////////////////// Post Method ////////////////////////////////
     sendPostSignupRequest(url, bodyParams, onSuccess, onFailure) {

@@ -1,4 +1,4 @@
-import { Text, View, TouchableOpacity, } from 'react-native';
+import { Text, View, TouchableOpacity,Linking } from 'react-native';
 import React, { Component } from 'react';
 import BackIcon from 'react-native-vector-icons/AntDesign'
 import { primaryColor, textColor } from '../../assets/styles';
@@ -23,9 +23,8 @@ export default class ContactUs extends Component {
     }
 
     email = () => {
-        Share.shareSingle(shareOptions)
-            .then((res) => { console.log(res) })
-            .catch((err) => { err && console.log(err); });
+        
+        Linking.openURL('mailto:Support@gmail.com')
     }
     render() {
         return (
@@ -61,7 +60,7 @@ export default class ContactUs extends Component {
                         </Text>
                     </View>
                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 20 }}>
-                        <Text style={{ fontFamily: 'Ubuntu-SemiBold', fontSize: 16, color: '#000' }}>Suppot@gmail.com</Text>
+                        <Text style={{ fontFamily: 'Ubuntu-SemiBold', fontSize: 16, color: '#000' }}>Support@gmail.com</Text>
                         <TouchableOpacity onPress={() => this.email()} style={{ marginRight: 20, borderWidth: 1, alignSelf: 'flex-start', padding: 7, paddingLeft: 20, paddingRight: 20, borderRadius: 10 }}>
                             <Text style={{ fontFamily: 'Ubuntu-Regular', color: '#000' }}>Mail</Text>
                         </TouchableOpacity>

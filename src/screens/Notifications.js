@@ -1,6 +1,10 @@
 import { Text, View, FlatList } from 'react-native';
 import React, { Component } from 'react';
+import WebHandler from '../data/remote/WebHandler'
+import Routes from '../data/remote/Routes'
+import LoadingPage from '../components/LoadingPage'
 
+const webHandler = new WebHandler()
 const DATA = [
     {
         id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
@@ -27,19 +31,19 @@ const renderItem = ({ item }) => {
         <View style={{ backgroundColor: '#fff', elevation: 3, marginTop: 5, marginHorizontal: 12, marginBottom: 5,borderRadius:10 }}>
             <View style={{ alignSelf: 'flex-end', marginRight: 15, marginTop: 5 ,color:'#000'}}>
                 <Text style={{ fontSize: 10, fontFamily: 'Ubuntu-Regular',color:'#000' }}>
-                    {item.time}
+                    {item.notified_at}
                 </Text>
             </View>
 
             <View style={{marginLeft:10,}}>
                 <Text style={{fontSize:15,fontFamily:'Ubuntu-Bold',color:'#000'}}>
-                    {item.title}
+                Complaint
                 </Text>
             </View>
 
             <View style={{marginLeft:10,marginRight:20,marginTop:5,marginBottom:10}}>
                 <Text ellipsizeMode='tail' numberOfLines={1} style={{fontSize:12,fontFamily:'Ubuntu-Regular'}}>
-                    {item.messgae}
+                    {item.token}
                 </Text>
             </View>
         </View>
@@ -47,9 +51,36 @@ const renderItem = ({ item }) => {
 }
 
 export default class Notifications extends Component {
+    state={
+        data:[],
+        loading: false
+    }
+    componentDidMount() { 
+        
+    this.getNotifications();
+     }
+     
+  getNotifications = () => {
+    this.setState({loading: true});
+    webHandler.sendGetDataRequest(
+      Routes.GET_NOTI,
+      resp => {
+        console.log(resp.data);
+        this.setState({
+          data: resp.data,
+          loading: false,
+        });
+      },
+      error => {
+        console.log(error);
+        this.setState({loading: false});
+      },
+    );
+  };
     render() {
         return (
             <View style={{ flex: 1, backgroundColor: '#fff' }}>
+                {this.state.loading && <LoadingPage message={"Loading..."}/>}
                 <View style={{ alignSelf: 'center', marginTop: 20 }}>
                     <Text style={{ fontFamily: 'Ubuntu-Bold', fontSize: 18,color:'#000' }}>
                         Notifications
@@ -58,7 +89,7 @@ export default class Notifications extends Component {
 
                 <View style={{ marginTop: 20 }}>
                     <FlatList
-                        data={DATA}
+                        data={this.state.data}
                         renderItem={renderItem}
                         keyExtractor={item => item.id}
                     />

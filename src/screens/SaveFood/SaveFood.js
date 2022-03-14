@@ -66,7 +66,7 @@ export default class SaveFood extends Component {
 
     // Complaint Api //
     handleComplaint() {
-        const { numberofpeople, address, city, postalcode, message, image1, lat, lng } = this.state;
+        const { numberofpeople, address, city, postalcode, message,image, image1, lat, lng } = this.state;
         if (numberofpeople == '') {
             helper.showToast('Enter your Number of Peoples', 'red', '#fff')
             return
@@ -88,18 +88,24 @@ export default class SaveFood extends Component {
             return
         }
 
-        const params = JSON.stringify({
-            "no_of_peoples": numberofpeople,
-            "address": address,
-            "city": city,
-            "lat": lat,
-            "lng": lng,
-            "zip_code": postalcode,
-            "message": message
-        });
+        
+    var formdata = new FormData();
+    formdata.append('no_of_peoples', numberofpeople);
+    formdata.append('address', address);
+    formdata.append('city', city);
+    formdata.append('lat', lat);
+    formdata.append('lng', lng);
+    formdata.append('zip_code', postalcode);
+    formdata.append('message', message);
+    formdata.append('image', {
+      uri: image1 == '' ? image :image1,
+      name: 'ComplaintPNG',
+      type: 'image/jpeg',
+    });
+
 
         this.setState({ loading: true })
-        webHandler.sendPostDataRequest(Routes.SAVE_FOOD, params, (resp) => {
+        webHandler.sendPostDataRequest(Routes.SAVE_FOOD, formdata, (resp) => {
             helper.showToast('Sucessfully Submitted', 'green', '#fff')
             console.log('Submit Success', resp)
             this.setState({ loading: false })
@@ -128,6 +134,13 @@ export default class SaveFood extends Component {
                 const { code, message } = error;
                 console.warn(code, message);
             })
+    }
+
+
+    clear() {
+        this.setState({
+            numberofpeople:''
+        })
     }
     render() {
         return (
@@ -205,11 +218,32 @@ export default class SaveFood extends Component {
                             listViewDisplayed={false}
                             clearButtonMode={'always'}
                             onPress={(data, details = null) => {
+                                let resLength = details.address_components
+                                let zipCode = ''
+          
+                                let filtersResCity = details.address_components.filter(val=>{
+                                    if(val.types.includes('locality') || val.types.includes('sublocality')){
+                                        return val
+                                    }
+                                    if(val.types.includes('postal_code')){
+                                        let PostalCode = val.long_name
+                                        zipCode = PostalCode
+                                    }
+                                    return false
+                                })
+          
+                                let dataTxtCity = filtersResCity.length > 0 ? filtersResCity[0]: details.address_components[resLength > 1 ? resLength -2 : resLength - 1]
+                                let cityData = dataTxtCity.long_name && dataTxtCity.long_name.length > 17 ? dataTxtCity.short_name:dataTxtCity.long_name
+          
+                                console.log('Zip Code ===>', zipCode)
+                                console.log('City Name ===>', cityData)
                                 // 'details' is provided when fetchDetails = true
                                 this.setState({
                                     lat: details.geometry.location.lat,
                                     lng: details.geometry.location.lng,
-                                    address: data.description
+                                    address: data.description,
+                                    city:cityData,
+                                    postalcode:zipCode
                                 })
                                 console.log(details.geometry.location.lat);
                                 console.log(data.description);
@@ -217,7 +251,6 @@ export default class SaveFood extends Component {
                             query={{
                                 key: 'AIzaSyCw7O8ydcHBvr2psYkmYhavwCkxZ-wUiuY',
                                 language: 'en',
-                                components: "country:pak",
                                 types: "establishment",
                             }}
                             styles={{
@@ -260,6 +293,7 @@ export default class SaveFood extends Component {
                 <View style={{ marginTop: 10, marginHorizontal: 18 }}>
                     <Input
                         title={'City'}
+                        value1={this.state.city}
                         inpStyle={{ backgroundColor: '#DCDCDC' }}
                         onChange={(txt) => this.setState({ city: txt })}
                     />
@@ -268,6 +302,7 @@ export default class SaveFood extends Component {
                 <View style={{ marginTop: 10, marginHorizontal: 18 }}>
                     <Input
                         title={'Postal Code'}
+                        value1={this.state.postalcode}
                         inpStyle={{ backgroundColor: '#DCDCDC' }}
                         type={'number-pad'}
                         onChange={(txt) => this.setState({ postalcode: txt })}
@@ -288,7 +323,7 @@ export default class SaveFood extends Component {
 
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginHorizontal: 5, marginTop: 20, marginBottom: 10 }}>
                     <View style={{ flex: 1, marginHorizontal: 10 }}>
-                        <Button title={'Clear'} />
+                        <Button title={'Clear'} onPress={()=>this.clear()}/>
                     </View>
 
                     <View style={{ flex: 1, marginHorizontal: 10 }}>

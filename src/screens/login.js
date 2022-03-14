@@ -110,13 +110,13 @@ class Login extends React.Component {
                             <Input icon={<PasswordIcon name="form-textbox-password" size={20} color={textColor} />} title="Password" type="default" onChange={(txt) => this.setState({ password: txt })} />
                         </View>
 
-                        <View style={{ marginHorizontal: 25, marginTop: 20, flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-end' }}>
+                        {/* <View style={{ marginHorizontal: 25, marginTop: 20, flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-end' }}>
                             <TouchableOpacity style={{ alignSelf: 'flex-end' }}
                                 onPress={() => this.props.navigation.navigate('ForgotPassword')}>
                                 <Text style={{ color: textColor, fontFamily: fontFamily, fontSize: 14 }}> Forgot Password?</Text>
                             </TouchableOpacity>
 
-                        </View>
+                        </View> */}
 
                         <View style={{ marginHorizontal: 15, marginTop: 40 }}>
                             <Button title="Login" onPress={() => this.handleLogin()} inputStyle={{ marginHorizontal: 100 }}></Button>

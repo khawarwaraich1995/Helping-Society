@@ -10,4 +10,6 @@ export default {
     COMPLAINT_SUBMIT: SERVER + "/api/v1/client/register-complaint",
     SAVE_FOOD: SERVER + "/api/v1/client/save-food",
     SAVE_DONATION: SERVER + "/api/v1/client/save-donation",
+    GET_NOTI: SERVER + "/api/v1/client/get-notifications",
+    GET_COMPLAINS: SERVER + "/api/v1/client/get-history",
 }
