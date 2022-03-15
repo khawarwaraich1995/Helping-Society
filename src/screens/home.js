@@ -47,8 +47,16 @@ const DATA = [
 
 
 export default class home extends Component {
+    state={
+        name:'',
+        image:''
+    }
     componentDidMount() {
         this.sendDevicePNtoServer()
+        this.userData()
+        this.props.navigation.addListener('focus', () => {
+            this.userData()
+        });
     }
 
     sendDevicePNtoServer() {
@@ -63,6 +71,23 @@ export default class home extends Component {
             })
         })
     }
+
+    
+
+  /// User Profile Data ///
+  userData = () => {
+    prefs.getSession((userInfo) => {
+      console.log(userInfo)
+      if (userInfo) {
+        console.log(userInfo)
+        this.setState({
+          name: userInfo.userInfo.name,
+          image: userInfo.userInfo.image,
+        })
+
+      }
+    })
+  }
 
     renderItem = (item) => {
         return (
@@ -92,15 +117,15 @@ export default class home extends Component {
                     {/* Top Bar */}
                     <View style={{ marginTop: 20, alignItems: 'center', flexDirection: 'row',}}>
                        
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Profile')} style={{ position: 'absolute', right: 0 }}>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Profile')} style={{ position: 'absolute', right: 0 ,elevation:3,backgroundColor:'#fff',borderRadius:40}}>
                             <Image
                                 style={{ height: 40, width: 40, borderRadius: 40 }}
-                                source={{ uri: 'https://reactnative.dev/img/tiny_logo.png' }}
+                                source={this.state.image == '' ? { uri: 'https://toppng.com/uploads/preview/roger-berry-avatar-placeholder-11562991561rbrfzlng6h.png'} : {uri: this.state.image}}
                             />
                         </TouchableOpacity>
                         <View style={{ }}>
-                            <Text style={{ fontFamily: 'Ubuntu-Bold', fontSize: 22, color: textColor }}>
-                                Welcome, Khawar
+                            <Text numberOfLines={1} style={{ fontFamily: 'Ubuntu-Bold', fontSize: 22, color: textColor }}>
+                                Welcome, {this.state.name}
                             </Text>
                         </View>
                     </View>

@@ -88,7 +88,7 @@ export default class Donations extends Component {
         formdata.append('quantity', quantity)
         formdata.append('donation_amount', donationAmount)
         formdata.append('message', message)
-        formdata.append('image', { uri: image1 == '' ? image :image1, name: 'DonationPNG', type: 'image/jpeg' })
+        // formdata.append('image', { uri: image1 == '' ? image :image1, name: 'DonationPNG', type: 'image/jpeg' })
         // formdata.append('image', { uri: image1, name: 'DonationPNG', type: 'image/jpeg' })
         this.setState({ loading: true })
         webHandler.sendPostDataRequest(Routes.SAVE_DONATION, formdata, (resp) => {
@@ -218,44 +218,7 @@ export default class Donations extends Component {
                                 </View>
                             </View>
 
-                            <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: 20 }}>
-
-
-                                {this.state.image1 ? null :
-                                    <TouchableOpacity onPress={() => this.imagePickCamera()}>
-                                        {this.state.image ?
-                                            <View>
-                                                <Image source={{ uri: this.state.image }} style={{ height: 63, width: 63, borderRadius: 50, }} />
-                                            </View>
-                                            :
-                                            <View>
-                                                <View style={{ backgroundColor: '#78F2C3', alignSelf: 'flex-start', padding: 15, borderRadius: 50, alignSelf: 'center' }}>
-                                                    <Image style={{ height: 30, width: 30 }} source={require('../../assets/images/camera.png')} />
-                                                </View>
-                                                <View>
-                                                    <Text style={{ textAlign: 'center', fontFamily: 'Ubuntu-Regular', color: '#000', marginTop: 5, fontSize: 12 }}>Use{'\n'}Camera</Text>
-                                                </View>
-                                            </View>}
-                                    </TouchableOpacity>}
-
-                                {this.state.image ? null :
-                                    <TouchableOpacity onPress={() => this.imagePickCamera1()}>
-                                        {this.state.image1 ?
-                                            <View>
-                                                <Image source={{ uri: this.state.image1 }} style={{ height: 63, width: 63, borderRadius: 50, }} />
-                                            </View>
-                                            :
-                                            <View>
-                                                <View style={{ backgroundColor: '#78F2C3', alignSelf: 'flex-start', padding: 15, borderRadius: 50, alignSelf: 'center' }}>
-                                                    <Image style={{ height: 30, width: 30 }} source={require('../../assets/images/image-gallery.png')} />
-                                                </View>
-                                                <View>
-                                                    <Text style={{ textAlign: 'center', fontFamily: 'Ubuntu-Regular', color: '#000', marginTop: 5, fontSize: 12 }}>Insert{'\n'}Image</Text>
-                                                </View>
-                                            </View>}
-                                    </TouchableOpacity>}
-
-                            </View>
+                            
 
                             <View style={{ marginTop: 10, marginHorizontal: 18 }}>
                                 <Text style={{ marginBottom: 5, fontSize: 16, fontFamily: 'Ubuntu-Bold', color: '#000' }}>Additional Information</Text>
@@ -268,9 +231,6 @@ export default class Donations extends Component {
 
 
                             <View style={{ flexDirection: 'row', alignItems: 'center', marginHorizontal: 5, marginTop: 20, marginBottom: 10 }}>
-                                <View style={{ flex: 1, marginHorizontal: 10 }}>
-                                    <Button title={'Clear'} />
-                                </View>
 
                                 <View style={{ flex: 1, marginHorizontal: 10 }}>
                                     <Button title={'Submit'} onPress={() => this.handleDonation()} />
@@ -378,43 +338,7 @@ export default class Donations extends Component {
                                     </View>
                                 </View>
 
-                                <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: 20 }}>
-
-
-                                    {this.state.image1 ? null :
-                                        <TouchableOpacity onPress={() => this.imagePickCamera()}>
-                                            {this.state.image ?
-                                                <View>
-                                                    <Image source={{ uri: this.state.image }} style={{ height: 63, width: 63, borderRadius: 50, }} />
-                                                </View>
-                                                :
-                                                <View>
-                                                    <View style={{ backgroundColor: '#78F2C3', alignSelf: 'flex-start', padding: 15, borderRadius: 50, alignSelf: 'center' }}>
-                                                        <Image style={{ height: 30, width: 30 }} source={require('../../assets/images/camera.png')} />
-                                                    </View>
-                                                    <View>
-                                                        <Text style={{ textAlign: 'center', fontFamily: 'Ubuntu-Regular', color: '#000', marginTop: 5, fontSize: 12 }}>Use{'\n'}Camera</Text>
-                                                    </View>
-                                                </View>}
-                                        </TouchableOpacity>}
-
-                                    {this.state.image ? null :
-                                        <TouchableOpacity onPress={() => this.imagePickCamera1()}>
-                                            {this.state.image1 ?
-                                                <View>
-                                                    <Image source={{ uri: this.state.image1 }} style={{ height: 63, width: 63, borderRadius: 50, }} />
-                                                </View>
-                                                :
-                                                <View>
-                                                    <View style={{ backgroundColor: '#78F2C3', alignSelf: 'flex-start', padding: 15, borderRadius: 50, alignSelf: 'center' }}>
-                                                        <Image style={{ height: 30, width: 30 }} source={require('../../assets/images/image-gallery.png')} />
-                                                    </View>
-                                                    <View>
-                                                        <Text style={{ textAlign: 'center', fontFamily: 'Ubuntu-Regular', color: '#000', marginTop: 5, fontSize: 12 }}>Insert{'\n'}Image</Text>
-                                                    </View>
-                                                </View>}
-                                        </TouchableOpacity>}
-                                </View>
+                               
 
 
                                 <View style={{ marginTop: 10, marginHorizontal: 18 }}>
@@ -428,10 +352,6 @@ export default class Donations extends Component {
 
 
                                 <View style={{ flexDirection: 'row', alignItems: 'center', marginHorizontal: 5, marginTop: 20, marginBottom: 10 }}>
-                                    <View style={{ flex: 1, marginHorizontal: 10 }}>
-                                        <Button title={'Clear'} />
-                                    </View>
-
                                     <View style={{ flex: 1, marginHorizontal: 10 }} >
                                         <Button title={'Submit'} onPress={() => this.handleDonation()} />
                                     </View>
@@ -535,41 +455,7 @@ export default class Donations extends Component {
                                     </View>
                                 </View>
 
-                                <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: 20 }}>
-                                    {this.state.image1 ? null :
-                                        <TouchableOpacity onPress={() => this.imagePickCamera()}>
-                                            {this.state.image ?
-                                                <View>
-                                                    <Image source={{ uri: this.state.image }} style={{ height: 63, width: 63, borderRadius: 50, }} />
-                                                </View>
-                                                :
-                                                <View>
-                                                    <View style={{ backgroundColor: '#78F2C3', alignSelf: 'flex-start', padding: 15, borderRadius: 50, alignSelf: 'center' }}>
-                                                        <Image style={{ height: 30, width: 30 }} source={require('../../assets/images/camera.png')} />
-                                                    </View>
-                                                    <View>
-                                                        <Text style={{ textAlign: 'center', fontFamily: 'Ubuntu-Regular', color: '#000', marginTop: 5, fontSize: 12 }}>Use{'\n'}Camera</Text>
-                                                    </View>
-                                                </View>}
-                                        </TouchableOpacity>}
-
-                                    {this.state.image ? null :
-                                        <TouchableOpacity onPress={() => this.imagePickCamera1()}>
-                                            {this.state.image1 ?
-                                                <View>
-                                                    <Image source={{ uri: this.state.image1 }} style={{ height: 63, width: 63, borderRadius: 50, }} />
-                                                </View>
-                                                :
-                                                <View>
-                                                    <View style={{ backgroundColor: '#78F2C3', alignSelf: 'flex-start', padding: 15, borderRadius: 50, alignSelf: 'center' }}>
-                                                        <Image style={{ height: 30, width: 30 }} source={require('../../assets/images/image-gallery.png')} />
-                                                    </View>
-                                                    <View>
-                                                        <Text style={{ textAlign: 'center', fontFamily: 'Ubuntu-Regular', color: '#000', marginTop: 5, fontSize: 12 }}>Insert{'\n'}Image</Text>
-                                                    </View>
-                                                </View>}
-                                        </TouchableOpacity>}
-                                </View>
+                                
 
 
                                 <View style={{ marginTop: 10, marginHorizontal: 18 }}>
@@ -584,9 +470,6 @@ export default class Donations extends Component {
 
 
                                 <View style={{ flexDirection: 'row', alignItems: 'center', marginHorizontal: 5, marginTop: 20, marginBottom: 10 }}>
-                                    <View style={{ flex: 1, marginHorizontal: 10 }}>
-                                        <Button title={'Clear'} />
-                                    </View>
 
                                     <View style={{ flex: 1, marginHorizontal: 10 }}>
                                         <Button title={'Submit'} onPress={() => this.handleDonation()} />

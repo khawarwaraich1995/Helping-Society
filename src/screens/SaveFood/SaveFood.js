@@ -71,6 +71,10 @@ export default class SaveFood extends Component {
             helper.showToast('Enter your Number of Peoples', 'red', '#fff')
             return
         }
+        if (image == '' && image1 == '') {
+          helper.showToast('Select an Image', 'red', '#fff');
+          return;
+        }
         if (address == '') {
             helper.showToast('Enter your Address', 'red', '#fff')
             return
@@ -322,9 +326,6 @@ export default class SaveFood extends Component {
                 </View>
 
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginHorizontal: 5, marginTop: 20, marginBottom: 10 }}>
-                    <View style={{ flex: 1, marginHorizontal: 10 }}>
-                        <Button title={'Clear'} onPress={()=>this.clear()}/>
-                    </View>
 
                     <View style={{ flex: 1, marginHorizontal: 10 }}>
                         <Button title={'Submit'} onPress={() => this.handleComplaint()} />

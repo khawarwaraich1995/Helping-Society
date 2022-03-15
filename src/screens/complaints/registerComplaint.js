@@ -15,6 +15,7 @@ import PrefHandler from '../../data/local/PrefHandler';
 import Helper from '../../utils/Helper';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 import LoadingPage from '../../components/LoadingPage';
+import GetLocation from 'react-native-get-location'
 import {
   check,
   request,
@@ -23,7 +24,6 @@ import {
   PERMISSIONS,
   RESULTS,
 } from 'react-native-permissions';
-import GeoLocation from 'react-native-geolocation-service';
 const countries = [
   'Agriculture',
   'Citizen Rights',
@@ -76,25 +76,22 @@ export default class RegisterComplaint extends Component {
     }
   }
   location = () => {
-    this.checkForLocationPermission(isAllowed => {
-      if (isAllowed) {
-        GeoLocation.getCurrentPosition(
-          position => {
-            this.setState({
-              lat: position.coords.latitude,
-              lng: position.coords.longitude,
-            });
-            helper.showToast('Location Recived SucessFully', 'green', '#fff');
-          },
-          error => {
-            console.log(error);
-          },
-          {enableHighAccuracy: true},
-        );
-      } else {
-        console.log('permission not allowed');
-      }
-    });
+    GetLocation.getCurrentPosition({
+      enableHighAccuracy: true,
+      timeout: 15000,
+  })
+      .then(location => {
+          console.log(location);
+          this.setState({
+              lat: location.latitude,
+              lng: location.longitude
+          })
+          helper.showToast('Location Recived SucessFully', 'green', '#fff')
+      })
+      .catch(error => {
+          const { code, message } = error;
+          console.warn(code, message);
+      })
   };
 
   imagePickCamera = () => {
@@ -145,6 +142,10 @@ export default class RegisterComplaint extends Component {
       helper.showToast('Enter your Postal Code', 'red', '#fff');
       return;
     }
+    if (image == '' && image1 == '') {
+      helper.showToast('Select an Image', 'red', '#fff');
+      return;
+    }
     if (message == '') {
       helper.showToast('Enter your Message', 'red', '#fff');
       return;
@@ -171,6 +172,7 @@ export default class RegisterComplaint extends Component {
       resp => {
         console.log('Submit Success', resp);
         helper.showToast('Complaint Sucessfully Submitted', 'green', '#fff');
+        this.props.navigation.navigate('Home')
         this.setState({loading: false});
       },
       errorData => {
@@ -482,9 +484,6 @@ export default class RegisterComplaint extends Component {
             marginTop: 20,
             marginBottom: 10,
           }}>
-          <View style={{flex: 1, marginHorizontal: 10}}>
-            <Button title={'Clear'} />
-          </View>
 
           <View style={{flex: 1, marginHorizontal: 10}}>
             <Button title={'Submit'} onPress={() => this.handleComplaint()} />

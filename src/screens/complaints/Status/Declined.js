@@ -2,6 +2,7 @@ import {Text, View, FlatList} from 'react-native';
 import React, {Component} from 'react';
 import WebHandler from '../../../data/remote/WebHandler';
 import Routes from '../../../data/remote/Routes';
+import LoadingPage from '../../../components/LoadingPage'
 
 const webHandler = new WebHandler();
 
@@ -82,7 +83,7 @@ const renderItem = ({item}) => {
 };
 
 export default class Accepted extends Component {
-  state = {donations: []};
+  state = {donations: [],loading:false};
   componentDidMount() {
     this.getAccepted();
   }
@@ -108,6 +109,7 @@ export default class Accepted extends Component {
     
     return (
       <View style={{flex: 1, backgroundColor: '#fff'}}>
+      {this.state.loading && <LoadingPage message='Loading...'/>}
         <FlatList
           data={this.state.donations}
           renderItem={renderItem}
