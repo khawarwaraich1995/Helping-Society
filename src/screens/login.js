@@ -107,7 +107,7 @@ class Login extends React.Component {
                         </View>
 
                         <View style={{ marginHorizontal: 25, marginTop: 35 }}>
-                            <Input icon={<PasswordIcon name="form-textbox-password" size={20} color={textColor} />} title="Password" type="default" onChange={(txt) => this.setState({ password: txt })} />
+                            <Input secureTextEntry={true} icon={<PasswordIcon name="form-textbox-password" size={20} color={textColor} />} title="Password" type="default" onChange={(txt) => this.setState({ password: txt })} />
                         </View>
 
                         {/* <View style={{ marginHorizontal: 25, marginTop: 20, flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-end' }}>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { View, Text, TextInput } from 'react-native'
 
-const Input = ({ inpStyle, iconStyle, onChange, icon, title, type, placeholderTextColor, multiline, value1 }) => {
+const Input = ({ inpStyle, iconStyle, onChange, icon, title, type, placeholderTextColor, multiline, value1,secureTextEntry }) => {
 
     const [value, setValue] = useState("")
 
@@ -20,6 +20,7 @@ const Input = ({ inpStyle, iconStyle, onChange, icon, title, type, placeholderTe
                     placeholderTextColor={placeholderTextColor}
                     keyboardType={type}
                     placeholder={title}
+                    secureTextEntry={secureTextEntry}
                     onChangeText={(txt) => handleTextOnChange(txt)}
                 />
             </View>
