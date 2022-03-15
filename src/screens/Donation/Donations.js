@@ -158,7 +158,7 @@ export default class Donations extends Component {
                         <View>
                             <View style={{ marginTop: 10, marginHorizontal: 18 }}>
                                 <Input
-                                    title={'Quantity'}
+                                    title={'Amount'}
                                     type={'number-pad'}
                                     inpStyle={{ backgroundColor: '#DCDCDC' }}
                                     onChange={(txt) => this.setState({ quantity: txt })}
@@ -394,7 +394,7 @@ export default class Donations extends Component {
 
                                 <View style={{ marginTop: 10, marginHorizontal: 18 }}>
                                     <Input
-                                        title={'Quantity'}
+                                        title={'Amount'}
                                         type={'number-pad'}
                                         onChange={(txt) => this.setState({ quantity: txt })}
                                         inpStyle={{ backgroundColor: '#DCDCDC' }}
