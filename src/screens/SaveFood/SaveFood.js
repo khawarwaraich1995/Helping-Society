@@ -111,6 +111,7 @@ export default class SaveFood extends Component {
         this.setState({ loading: true })
         webHandler.sendPostDataRequest(Routes.SAVE_FOOD, formdata, (resp) => {
             helper.showToast('Sucessfully Submitted', 'green', '#fff')
+            this.props.navigation.navigate('Home')
             console.log('Submit Success', resp)
             this.setState({ loading: false })
 

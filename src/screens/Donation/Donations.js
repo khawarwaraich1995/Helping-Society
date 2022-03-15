@@ -86,13 +86,14 @@ export default class Donations extends Component {
         formdata.append('type', type)
         formdata.append('address', address)
         formdata.append('quantity', quantity)
-        formdata.append('donation_amount', donationAmount)
+        // formdata.append('donation_amount', donationAmount)
         formdata.append('message', message)
         // formdata.append('image', { uri: image1 == '' ? image :image1, name: 'DonationPNG', type: 'image/jpeg' })
         // formdata.append('image', { uri: image1, name: 'DonationPNG', type: 'image/jpeg' })
         this.setState({ loading: true })
         webHandler.sendPostDataRequest(Routes.SAVE_DONATION, formdata, (resp) => {
             console.log('Submit Success', resp)
+            this.props.navigation.navigate('Home')
             helper.showToast('Sucessfully Submitted', 'green', '#fff')
             this.setState({ loading: false })
 
